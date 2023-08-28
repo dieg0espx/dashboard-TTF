@@ -7,6 +7,8 @@ function Trucks() {
   const [showSidebar, setShowSidebar] = useState(false)
   const [selectedTruck, setSelectedTruck] = useState([])
   const [openIframe, setOpenIframe] = useState(0)
+  const [showPopup, setShowPopup] = useState(false)
+  const [selectedImage, setSelectedImage] = useState('')
 
     useEffect(()=>{
         getTrucks()
@@ -45,9 +47,11 @@ function Trucks() {
       setShowSidebar(true)
   }
 
-  useEffect(()=>{
-    console.log(openIframe);
-  },[openIframe])
+  function openImage(url){
+    setShowPopup(true)
+    setSelectedImage(url)
+  }
+
 
 
   return (
@@ -71,15 +75,61 @@ function Trucks() {
               </div>
             ))}
           </div>
-          <div className="sideBar" style={{display: showSidebar? "block":"none"}}>
-            <p id="company"> <b>{selectedTruck.company}</b> </p>
-            <p> {selectedTruck.location}</p>
-            <p> {formatDate(selectedTruck.date)}</p>
-            <p> {selectedTruck.time}</p>
-            <br></br>
-            <iframe className={openIframe == 1 ? 'iframeOpen':""} onClick={()=>setOpenIframe(1)} src={'https://api.ttfconstruction.com/getImage1.php?id=' + selectedTruck.id} />
-            <iframe className={openIframe == 2 ? 'iframeOpen':""} onClick={()=>setOpenIframe(2)} src={'https://api.ttfconstruction.com/getImage2.php?id=' + selectedTruck.id} />  
-            <iframe className={openIframe == 3 ? 'iframeOpen':""} onClick={()=>setOpenIframe(3)} src={'https://api.ttfconstruction.com/getImage3.php?id=' + selectedTruck.id} />
+          <div className="sideBar" style={{ display: showSidebar ? "block" : "none" }}>
+            {selectedTruck.company ? (
+              <>
+                <p id="company">
+                  <b>{selectedTruck.company}</b>
+                </p>
+                <p>{selectedTruck.location}</p>
+                <p>{formatDate(selectedTruck.date)}</p>
+                <p>{selectedTruck.time}</p>
+                <br />
+                <iframe
+                  src={'https://api.ttfconstruction.com/getImage1.php?id=' + selectedTruck.id}
+                  onClick={() => console.log('a')}
+                  title="Image 1"
+                />
+                <div
+                  className='imageOpener'
+                  onClick={() =>
+                    openImage('https://api.ttfconstruction.com/getImage1.php?id=' + selectedTruck.id)
+                  }
+                />
+                <iframe
+                  src={'https://api.ttfconstruction.com/getImage2.php?id=' + selectedTruck.id}
+                  onClick={() => openImage(2)}
+                  title="Image 2"
+                />
+                <div
+                  className='imageOpener'
+                  onClick={() =>
+                    openImage('https://api.ttfconstruction.com/getImage2.php?id=' + selectedTruck.id)
+                  }
+                />
+                <iframe
+                  src={'https://api.ttfconstruction.com/getImage3.php?id=' + selectedTruck.id}
+                  onClick={() => openImage(3)}
+                  title="Image 3"
+                />
+                <div
+                  className='imageOpener'
+                  onClick={() =>
+                    openImage('https://api.ttfconstruction.com/getImage3.php?id=' + selectedTruck.id)
+                  }
+                />
+              </>
+            ) : (
+              <p className='emptyArray'>Nothing Selected</p>
+            )}
+          </div>
+          <div
+            className='overlay'
+            style={{ display: showPopup ? "block" : "none" }}
+            onClick={() => setShowPopup(false)}
+          />
+          <div className='image-popup' style={{ display: showPopup ? "block" : "none" }}>
+            <iframe src={selectedImage} title="Selected Image" />
           </div>
         </div>
       </div>

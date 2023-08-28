@@ -27,34 +27,37 @@ function Payroll() {
     const [to, setTo] = useState()
     const [payrollURL, setPayrollURL] = useState('')
 
+    const [filterFrom, setFilterFrom] = useState()
+    const [filterTo, setFilterTo] = useState()
+    const [filterCode, setFilterCode] = useState('')
+
     useEffect(()=>{
         getHours()
         getEmployees()
     },[])
 
     function getHours() {
+      const threeMonthsAgo = new Date();
+      threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 5);
+    
       console.log(rangeDates);
-      fetch('http://localhost:3002/api/getHours')
+      fetch('https://api.ttfconstruction.com/getHours.php')
         .then(response => response.json())
         .then(response => {
-
-            let formattedResponse = response.map(item => ({
-              ...item,
-              otHours: parseFloat(item.otHours).toFixed(2),
-              regHours: parseFloat(item.regHours).toFixed(2),
-            }));
-            formattedResponse.sort((a, b) => new Date(b.date) - new Date(a.date));
-            setHours(formattedResponse);
+          let formattedResponse = response.map(item => ({
+            ...item,
+            otHours: parseFloat(item.otHours).toFixed(2),
+            regHours: parseFloat(item.regHours).toFixed(2),
+          }));
+          formattedResponse = formattedResponse.filter(item => new Date(item.date) >= threeMonthsAgo);
+          formattedResponse.sort((a, b) => new Date(b.date) - new Date(a.date));
+          setHours(formattedResponse);
         })
         .catch(error => {
           console.error('Error:', error);
         });
     }
-
     
-
-    
-
     function formatDate(date){
        let preFormat = new Date(date).toLocaleDateString('en-US', {
           month: '2-digit',
@@ -92,16 +95,14 @@ function Payroll() {
           getHours()
     }
 
-
     function calculateHours(startTime, endTime) {
         const start = new Date(`1970-01-01T${startTime}`);
         const end = new Date(`1970-01-01T${endTime}`);
         const timeDifferenceMs = end - start;
         const hours = timeDifferenceMs / (1000 * 60 * 60); // Convert milliseconds to hours
         return hours;
-      }
+    }
       
-    
     useEffect(() => {
       const hoursWorked = calculateHours(signIn, signOut);
     
@@ -114,13 +115,11 @@ function Payroll() {
       }
     }, [signIn, signOut]);
 
-
     const onDateSelected = async (range) => {
       setFrom(formatDate(range[0]))
       setTo(formatDate(range[1]))
       getDatesBetween(range[0], range[1])
     }
-
 
     function getDatesBetween(startDate, endDate){
       const daysDifference = differenceInDays(endDate, startDate);
@@ -133,8 +132,6 @@ function Payroll() {
       setRangeDates(datesInRange)
     }
 
-
-    
     function generatePayroll(){
       setPayroll([])
       if(rangeDates.length < 1 || selectedEmployeeCodes <=0){
@@ -176,9 +173,8 @@ function Payroll() {
       }
     }
   
-    
     function getEmployees() {
-      fetch('http://localhost:3002/api/getEmployees')
+      fetch('https://api.ttfconstruction.com/getEmployees.php')
       .then(response => response.json())
       .then(response => {
           const filteredEmployees = response.filter(employee =>
@@ -193,8 +189,6 @@ function Payroll() {
           console.error('Error fetching employee data:', error);
       });
     }
-
-  
 
 
     const handleEmployeeClick = (employeeCode) => {
@@ -225,6 +219,8 @@ function Payroll() {
       }
     },[selectedEmployeeCodes])
   
+
+
       
   return (
     <div className='wrapper-payroll'>
@@ -234,25 +230,65 @@ function Payroll() {
       <div className='content' >
         <div className='header'>
           <h1> Payroll </h1>
-          <i className="bi bi-layout-sidebar-inset-reverse iconSidebar" onClick={()=>setShowSidebar(!showSidebar)}></i>
+          <div className='actions'>
+            <div className='filter'>
+              <input type='date' onChange={(e)=>setFilterFrom(e.target.value)}></input>
+              <input type='date' onChange={(e)=>setFilterTo(e.target.value)}></input>
+              <select onChange={(e)=>setFilterCode(e.target.value)}>
+                <option disabled selected> Select Employee </option>
+                {employees.map((employee, index) => (
+                  <option key={employee.code} value={employee.code}>{employee.name}</option>
+                ))}
+              </select>
+              <button> Find </button>
+            </div>
+            <i className="bi bi-layout-sidebar-inset-reverse iconSidebar" onClick={()=>setShowSidebar(!showSidebar)}></i>
+          </div>
+        
         </div>
         <div className='main-grid' style={{display: showSidebar ? "grid":"block"}}>
-            <div className='hours'>
-              {hours.map((row) => (   
-                <div 
-                  className='row' 
-                  onClick={()=>updateRow(row.id, row.name, row.signIn, row.signOut, row.date )} style={{gridTemplateColumns: showSidebar? "70px 150px auto auto auto auto auto":"120px 150px auto auto auto auto auto"}}   >
-                    <p> {row.code} </p>
-                    <p id="name"> <b>{row.name}</b> </p>
-                    <p> {row.signIn} </p>
-                    <p> {row.signOut} </p>
-                    <p> {row.regHours} </p>
-                    <p> {row.otHours} </p>
-                    <p> {formatDate(row.date)} </p>
-                </div>
-              ))}
+            <div className='hours' style={{display: filterCode == '' ? "none":"block"}}>
+            {
+               hours.map((row) => {
+                 if (
+                   (filterCode === '' || row.code === filterCode) &&
+                   (filterFrom === '' || row.date > filterFrom) &&
+                   (filterTo === '' || row.date <= filterTo)
+                 ) {
+                   return (
+                     <div key={row.id} className='row' onClick={() =>   updateRow(row.id, row.name, row.signIn, row.signOut, row.date) } style={{   gridTemplateColumns: showSidebar ? '70px 150px auto auto auto auto auto': '120px 150px auto auto auto auto auto' }}>
+                       <p>{row.code}</p>
+                       <p id='name'><b>{row.name}</b></p>
+                       <p>{row.signIn}</p>
+                       <p>{row.signOut}</p>
+                       <p>{row.regHours}</p>
+                       <p>{row.otHours}</p>
+                       <p>{formatDate(row.date)}</p>
+                     </div>
+                   );
+                 }
+                 return null; 
+               })
+              }
             </div>
+            <div className='hours' style={{display: filterCode == '' ? "block":"none"}}>
+              {hours.map((row) => {                 
+                   return (
+                     <div key={row.id} className='row' onClick={() =>   updateRow(row.id, row.name, row.signIn, row.signOut, row.date) } style={{   gridTemplateColumns: showSidebar ? '70px 150px auto auto auto auto auto': '120px 150px auto auto auto auto auto' }}>
+                       <p>{row.code}</p>
+                       <p id='name'><b>{row.name}</b></p>
+                       <p>{row.signIn}</p>
+                       <p>{row.signOut}</p>
+                       <p>{row.regHours}</p>
+                       <p>{row.otHours}</p>
+                       <p>{formatDate(row.date)}</p>
+                     </div>
+                   )})
+              }
+            </div>
+
             <div className="sideBar" style={{display: showSidebar? "block":"none"}}>
+              <h3> New Payroll </h3>
                 <Calendar
                   selectRange={true}
                   onChange={onDateSelected}

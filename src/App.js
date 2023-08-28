@@ -9,6 +9,8 @@ import Trucks from './pages/Trucks';
 import Payroll from './pages/Payroll';
 import PrintPayroll from './pages/PrintPayroll';
 import Inventory from './pages/Inventory';
+import Forklifts from './pages/Forklifts';
+import Damages from './pages/Damages';
 
 function App() {
 
@@ -44,6 +46,12 @@ function App() {
           </Routes>
           <Routes>
             <Route path='/inventory'  element={<Inventory />} />
+          </Routes>
+          <Routes>
+            <Route path='/forklifts'  element={<Forklifts />} />
+          </Routes>
+          <Routes>
+            <Route path='/damages'  element={<Damages />} />
           </Routes>
         </div>
       </Router>

@@ -19,12 +19,6 @@ function PrintPayroll() {
         setTo(searchParams.get('to'))
     },[])
 
-    // useEffect(()=>{
-    //     if(payroll.length > ){
-    //         window.print()
-    //     }
-    // }, [payroll])
-
     function printDocument(){
         window.print()
     }
