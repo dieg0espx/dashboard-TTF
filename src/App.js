@@ -17,6 +17,9 @@ function App() {
     <div>
       <Router>
         <div className="App">
+        <Routes>
+            <Route path='*'  element={<Orders />} />
+          </Routes>
           <Routes>
             <Route path='/'  element={<Orders />} />
           </Routes>
