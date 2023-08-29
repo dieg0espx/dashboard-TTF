@@ -13,15 +13,12 @@ import Forklifts from './pages/Forklifts';
 import Damages from './pages/Damages';
 
 function App() {
-
-  
-  
   return (
     <div>
       <Router>
         <div className="App">
           <Routes>
-            <Route path=''  element={<Orders />} />
+            <Route path='/'  element={<Orders />} />
           </Routes>
           <Routes>
             <Route path='/orders'  element={<Orders />} />
