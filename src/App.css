@@ -141,13 +141,33 @@
 }
 
 .wrapper-order .header {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto auto;
   margin-bottom: 30px;
 }
+
+.wrapper-order .header .includeDrawings {
+  background-color: #65D1B5;
+  color: #282c34;
+  padding: 2px 10px;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 3px;
+  width: fit-content;
+  margin: 0 0 0 auto;
+}
+
 .wrapper-order .header h2 {
   margin-bottom: 5px;
+}
+
+.wrapper-orders .includeDrawings {
+  background-color: #65D1B5;
+  color: #282c34;
+  padding: 2px 5px;
+  font-weight: bold;
+  font-size: 15px;
+  border-radius: 3px;
 }
 
 .order {
@@ -1026,15 +1046,16 @@ abbr[title] {
   border: 1px solid black;
   border-collapse: collapse;
 }
-.wrapper-printPayroll table, tr, td, th{
+.wrapper-printPayroll table, .wrapper-printPayroll tr, .wrapper-printPayroll td, .wrapper-printPayroll th{
   border: 1px solid black;
   border-collapse: collapse;
-  height: 40px !important; 
+  height: 40px !important;
 }
 .wrapper-printPayroll th {
   background-color: black;
   color: white;
 }
+
 
 .wrapper-printPayroll img {
   width: 100px;

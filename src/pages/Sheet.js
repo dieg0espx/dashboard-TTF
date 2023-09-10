@@ -8,11 +8,16 @@ function Sheet() {
 
   useEffect(()=>{
       const searchParams = new URLSearchParams(window.location.search);
-      fetch('https://api.ttfconstruction.com/getOrderByID.php?id=' + searchParams.get("id") )
+      fetch('https://api.ttfconstruction.com/getOrderByID.php?id=' + getID() )
       .then(response => response.json())
       .then(response => setElements(response[0]))
       setTimeout(window.print,1000)
   },[])
+
+  function getID(){
+    let location = window.location.toString()
+    return location.split('=')[1]
+  }
 
 
   function formatDate(date){

@@ -21,32 +21,36 @@ function Orders() {
     }, []);
 
 
-
     function getOrders(){
       fetch('https://api.ttfconstruction.com/getOrders.php')
-      .then(response => response.json())
-      .then(response => {
-        const today = new Date();
-        const upcomingLimit = new Date();
-        upcomingLimit.setDate(upcomingLimit.getDate() + 1);
-        const pastLimit = new Date();
-        pastLimit.setDate(pastLimit.getDate() - 10); 
-  
-        const todayOrders = response.filter(order => isSameDate(new Date(order.date), today));
-        const upcomingOrders = response.filter(order => new Date(order.date) > new Date());
-        const pastOrders = response.filter(order => new Date(order.date) < today && new Date(order.date) >= pastLimit && !isSameDate(new Date(order.date), today));
-  
-        const sortedUpcomingOrders = upcomingOrders.sort((a, b) => new Date(a.date) - new Date(b.date));
-        const sortedPastOrders = pastOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
-  
-        setTodayOrders(todayOrders);
-        setUpcomingOrders(sortedUpcomingOrders);
-        setPastOrders(sortedPastOrders);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
+        .then(response => response.json())
+        .then(response => {
+          const today = new Date();
+          const tomorrow = new Date(today);
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          tomorrow.setHours(0, 0, 0, 0); // Set to the beginning of tomorrow
+          const pastLimit = new Date();
+          pastLimit.setDate(pastLimit.getDate() - 30); 
+    
+          const todayOrders = response.filter(order => isSameDate(new Date(order.date), today));
+          const upcomingOrders = response.filter(order => new Date(order.date) >= tomorrow);
+          const pastOrders = response.filter(order => new Date(order.date) < today && new Date(order.date) >= pastLimit && !isSameDate(new Date(order.date), today));
+    
+          const sortedUpcomingOrders = upcomingOrders.sort((a, b) => new Date(a.date) - new Date(b.date));
+          const sortedPastOrders = pastOrders.sort((a, b) => new Date(b.date) - new Date(a.date));
+    
+          setTodayOrders(todayOrders);
+          setUpcomingOrders(sortedUpcomingOrders);
+          setPastOrders(sortedPastOrders);
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
     }
+    
+
+    
+    
       
     function formatDate(date){
         let formattedDate = new Date(date).toLocaleString("en-US", {
@@ -54,6 +58,8 @@ function Orders() {
         })
         return formattedDate
     }
+
+    
 
     const iframeRef = useRef(null);
     function printOrder(url){
@@ -84,7 +90,7 @@ function Orders() {
         <div className='header'>
           <h1> Orders </h1>
           <div className='actions'>
-            <i className="bi bi-plus-lg plusIcon" onClick={()=>window.location.href="/newOrder"}></i>
+            <i className="bi bi-plus-lg plusIcon" onClick={()=>window.location.href="#/newOrder"}></i>
             <i className="bi bi-sliders sliderIcon" onClick={()=>setIsEditing(!isEditing)}></i>
           </div>
         </div>
@@ -93,18 +99,19 @@ function Orders() {
               <h2> Today's Orders</h2>
               {todayOrders.map((order) => (   
                 <div className='full-order'>
-                  <div className="order" key={order.id} onClick={()=>window.location.href= '/order?id=' + order.id}>
+                  <div className="order" key={order.id} onClick={()=>window.location.href= '#/order?id=' + order.id}>
                       <div id='left'>
                           <p> <b>{order.company}</b> </p>
                           <p> {order.jobsite} </p>
                       </div>
                       <div id="right">
+                        <p className='includeDrawings' style={{display: order.drawings == 'true'? "block":"none"}}>Include Drawings</p>
                         <p> {formatDate(order.date)} </p>
                       
                       </div>
                   </div>
                   <div className="order-actions" style={{display : isEditing? "flex":"none"}}>
-                    <button onClick={()=>printOrder('/sheet?id=' + order.id)}> <i className="bi bi-printer printerIcon"></i> </button>
+                    <button onClick={()=>printOrder('#/sheet?id=' + order.id)}> <i className="bi bi-printer printerIcon"></i> </button>
                     <button onClick={()=>confirmDelete(order.id, order.company, formatDate(order.date))}> <i className="bi bi-trash trashIcon"></i> </button>
                   </div>
                 </div>
@@ -114,17 +121,18 @@ function Orders() {
               <h2> Upcoming Orders </h2>
               {upcomingOrders.map((order) => (   
                 <div className='full-order'>
-                  <div className="order" key={order.id} onClick={()=>window.location.href= '/order?id=' + order.id}>
+                  <div className="order" key={order.id} onClick={()=>window.location.href= '#/order?id=' + order.id}>
                       <div id='left'>
                           <p> <b>{order.company}</b> </p>
                           <p> {order.jobsite} </p>
                       </div>
                       <div id="right">
+                      <p className='includeDrawings' style={{display: order.drawings == 'true'? "block":"none"}}>Include Drawings</p>
                       <p> {formatDate(order.date)} </p>
                       </div>
                   </div>
                   <div className="order-actions" style={{display : isEditing? "flex":"none"}}>
-                    <button onClick={()=>printOrder('/sheet?id=' + order.id)}> <i className="bi bi-printer printerIcon"></i> </button>
+                    <button onClick={()=>printOrder('#/sheet?id=' + order.id)}> <i className="bi bi-printer printerIcon"></i> </button>
                     <button onClick={()=>confirmDelete(order.id, order.company, formatDate(order.date))}> <i className="bi bi-trash trashIcon"></i> </button>
                   </div>
                 </div>
@@ -134,17 +142,18 @@ function Orders() {
               <h2> Past Orders </h2>
               {pastOrders.map((order) => (   
                 <div className='full-order'>
-                  <div className="order" key={order.id} onClick={()=>window.location.href= '/order?id=' + order.id}>
+                  <div className="order" key={order.id} onClick={()=>window.location.href= '#/order?id=' + order.id}>
                       <div id='left'>
                           <p> <b>{order.company}</b> </p>
                           <p> {order.jobsite} </p>
                       </div>
                       <div id="right">
+                      <p className='includeDrawings' style={{display: order.drawings == 'true'? "block":"none"}}>Include Drawings</p>
                       <p> {formatDate(order.date)} </p>
                       </div>
                   </div>
                   <div className="order-actions" style={{display : isEditing? "flex":"none"}}>
-                    <button onClick={()=>printOrder('/sheet?id=' + order.id)}> <i className="bi bi-printer printerIcon"></i> </button>
+                    <button onClick={()=>printOrder('#/sheet?id=' + order.id)}> <i className="bi bi-printer printerIcon"></i> </button>
                     <button onClick={()=>confirmDelete(order.id, order.company, formatDate(order.date))}> <i className="bi bi-trash trashIcon"></i> </button>
                   </div>
                 </div>

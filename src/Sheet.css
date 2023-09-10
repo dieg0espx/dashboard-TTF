@@ -64,7 +64,7 @@
   .wrapper-sheet .content table, tr, td, th{
   border: 1px solid black;
   border-collapse: collapse;
-  height: 20px;
+  height: 10px !important;
 }
   .wrapper-sheet .content td {
     border: 1px solid black;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef} from 'react'
 import Sidebar from '../components/Sidebar';
+import { useParams } from 'react-router-dom';
 
 
 function Order() {
@@ -11,28 +12,36 @@ function Order() {
     const [selectedID, setSelectedID] = useState(null)
   
     const inputRef = useRef(null);
-   
+    
     useEffect(()=>{
-      const searchParams = new URLSearchParams(window.location.search);
-      setSelectedID( searchParams.get("id"));
-      fetchData()
+     fetchData()
     },[])
+
     useEffect(()=>{
       inputRef.current.focus();
     },[showPopup])
 
-    function fetchData(){
-      const searchParams = new URLSearchParams(window.location.search);
-      fetch('https://api.ttfconstruction.com/getOrderByID.php?id=' + searchParams.get("id") )
-      .then(response => response.json())
-      .then(response => setOrder(response))
+    function getID(){
+      let location = window.location.toString()
+      return location.split('=')[1]
     }
 
-    function formatDate(date){
-        let formattedDate = new Date(date).toLocaleString("en-US", {
-            dateStyle: "long",
-        })
-        return formattedDate
+    function fetchData(){
+      fetch('https://api.ttfconstruction.com/getOrderByID.php?id=' +  getID())
+      .then(response => response.json())
+      .then(response => {
+        console.log(response);
+        setOrder(response)
+      })
+    }
+
+    function formatDate(date, daysToAdd = 0) {
+      let newDate = new Date(date);
+      newDate.setDate(newDate.getDate() + daysToAdd);      
+      let formattedDate = newDate.toLocaleString("en-US", {
+          dateStyle: "long",
+      });
+      return formattedDate;
     }
 
     function showUpdatePopup(name, value, code){
@@ -47,7 +56,7 @@ function Order() {
     }
 
     async function updateElement(id, value, code){
-      await fetch(`https://api.ttfconstruction.com/updateOrder.php?id=` + id + '&&code=' + code + '&&value=' + value)
+      await fetch(`https://api.ttfconstruction.com/updateOrder.php?id=` + getID() + '&&code=' + code + '&&value=' + value)
       fetchData()
       setNameToUpdate('')
       setValueToUpdate('')
@@ -63,10 +72,13 @@ function Order() {
             {order.map((elements) => (   
                 <div key={elements}> 
                     <div className='header'>
-                      <div>
-                        <h2> {elements.company} </h2>
-                        <h3> {elements.jobsite} </h3>
-                      </div>
+                        <div>
+                          <h2> {elements.company} </h2>
+                          <h3> {elements.jobsite} </h3>
+                        </div>
+                        <div>
+                          <p className='includeDrawings' style={{display: elements.drawings == 'true'? "block":"none"}}>Include Drawings</p>
+                        </div>
                     </div>
 
                     <div className='row' onClick={() => showUpdatePopup("company", elements.company, 'company')}>

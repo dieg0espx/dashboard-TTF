@@ -151,7 +151,11 @@ function Payroll() {
                   const regHoursDouble = parseFloat(hours[i].regHours);
                   const otHoursDouble = parseFloat(hours[i].otHours);
                   reg = reg + regHoursDouble
-                  ot = ot + otHoursDouble
+                  if(employees[e].contracted ==1){
+                    ot = ot + (otHoursDouble * 1.5)
+                  } else {
+                    ot = ot + otHoursDouble
+                  }
                 }
                 tot = reg + ot
               }
@@ -160,7 +164,7 @@ function Payroll() {
           }
         } 
         console.log(payroll);
-        printPayroll( "/printPayroll/?data=" + JSON.stringify(payroll) + "&&from=" +  from + "&&to=" + to) 
+        printPayroll( "#/printPayroll/?data=" + JSON.stringify(payroll) + "&&from=" +  from + "&&to=" + to) 
       }
     }
 
@@ -218,8 +222,6 @@ function Payroll() {
         setEnableSwitch(false)
       }
     },[selectedEmployeeCodes])
-  
-
 
       
   return (

@@ -15,11 +15,8 @@ import Damages from './pages/Damages';
 function App() {
   return (
     <div>
-      <Router>
+      {/* <Router> */}
         <div className="App">
-        <Routes>
-            <Route path='*'  element={<Orders />} />
-          </Routes>
           <Routes>
             <Route path='/'  element={<Orders />} />
           </Routes>
@@ -54,7 +51,7 @@ function App() {
             <Route path='/damages'  element={<Damages />} />
           </Routes>
         </div>
-      </Router>
+      {/* </Router> */}
     </div>
   );
 }
