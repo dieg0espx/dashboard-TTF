@@ -319,7 +319,7 @@ function Payroll() {
                    )})
               }
             </div>
-
+            <div className='overlay' style={{display: showSidebar && isMobile ? "block":"none"}} onClick={()=>setShowSidebar(()=>!showSidebar)}/>
             <div className="sideBar" style={{display: showSidebar? "block":"none"}}>
               <h3> New Payroll </h3>
                 <Calendar

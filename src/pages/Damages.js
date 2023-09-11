@@ -9,9 +9,13 @@ function Damages() {
     const [damageSelected, setDamageSelected] = useState([])
     const [selectedImage, setSelectedImage] = useState()
     const [showPopup, setShowPopup] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
 
     useEffect(()=>{
         getDamages()
+        if(window.innerWidth < 600){
+          setIsMobile(true)
+        }
     },[])
 
     function getDamages() {
@@ -56,12 +60,13 @@ function Damages() {
             <div className='damages'>
                 {damages.map((damage) => (
                     <div key={damage.id} className='row-damage' onClick={()=>selectDamage(damage.id, damage.company, damage.theLocation, damage.theDate, damage.theDescription)}>
-                        <p>{damage.company}</p>
+                        <p id="company">{damage.company}</p>
                         <p> {damage.theLocation} </p>
                         <p> {formatDate(damage.theDate)} </p>
                     </div>
                 ))}
             </div>
+            <div className='overlay' style={{display: isMobile && showSidebar ? "block":"none"}} onClick={()=>setShowSidebar(!showSidebar)} />
             <div className='sidebar' style={{display: showSidebar? "block":"none"}}>
                 { damageSelected.company ? (
                     <div>

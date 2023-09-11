@@ -6,6 +6,7 @@ function Forklifts() {
     const [forklifts, setForklifts] = useState([])
     const [showSideBar, setShowSidebar] = useState(false)
     const [selectedForklift, setSelectedForklift] = useState([])
+    const [isMobile, setIsMobile] = useState(false)
 
     let rules = [
         'Check the forks or attachment are in the lowered position and the park brake is applied.',
@@ -40,6 +41,9 @@ function Forklifts() {
 
     useEffect(()=>{
         getForklifts()
+        if(window.innerWidth < 600){
+          setIsMobile(true)
+        }
     },[])
 
     
@@ -89,11 +93,12 @@ function Forklifts() {
                 {forklifts.map((row, key) => (
                   <div key={key} className='row-forklift' onClick={() => selectForklift(key)}>
                     <p id="forklift">{row.forklift}</p>
-                    <p id="name"> {row.name} </p>
+                    <p id="name" style={{display: isMobile? "none":"block"}}> {row.name} </p>
                     <p id="date"> {formatDate(row.date)} </p>
                   </div>
                 ))}
               </div>
+              <div className='overlay' style={{display: isMobile && showSideBar ? "block":"none"}}  onClick={()=>setShowSidebar(!showSideBar)}/>
               <div className='sidebar' style={{ display: showSideBar? "block" : "none" }}>
               {selectedForklift.name ? (
                     <div>
