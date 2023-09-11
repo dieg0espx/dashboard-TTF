@@ -10,15 +10,19 @@ function Order() {
     const [nameToUpdate, setNameToUpdate] = useState("")
     const [valueToUpdate, setValueToUpdate] = useState("");
     const [selectedID, setSelectedID] = useState(null)
+    const [isMobile, setIsMobile] = useState(false)
   
     const inputRef = useRef(null);
     
     useEffect(()=>{
      fetchData()
+     window.innerWidth < 600 ? setIsMobile(true) : setIsMobile(false)
     },[])
 
     useEffect(()=>{
-      inputRef.current.focus();
+      if(!isMobile){
+        inputRef.current.focus();
+      }      
     },[showPopup])
 
     function getID(){

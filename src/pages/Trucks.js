@@ -9,9 +9,11 @@ function Trucks() {
   const [openIframe, setOpenIframe] = useState(0)
   const [showPopup, setShowPopup] = useState(false)
   const [selectedImage, setSelectedImage] = useState('')
+  const [isMobile, setIsMobile] = useState(false)
 
     useEffect(()=>{
         getTrucks()
+        window.innerWidth < 600 ? setIsMobile(true):setIsMobile(false)
     },[])
 
     function getTrucks() {
@@ -64,17 +66,18 @@ function Trucks() {
           <h1> Trucks </h1>
           <i className="bi bi-layout-sidebar-inset-reverse iconSidebar" onClick={()=>setShowSidebar(!showSidebar)}></i>
         </div>
-        <div className="main-grid" style={{display: showSidebar? "grid":"block"}}>
+        <div className="main-grid" style={{display: showSidebar ? "grid":"block"}}>
           <div className='trucks'>
             {trucks.map((truck) => (
               <div className={showSidebar? "shortRow":"row"} onClick={()=>showTruck(truck.id, truck.company, truck.location, truck.date, truck.time)}>
                 <p id="company"> {truck.company} </p>
                 <p> {truck.location} </p>
                 <p> {formatDate(truck.date)} </p>
-                <p style={{display: showSidebar? "none":"block"}}> {truck.time} </p>
+                <p style={{display: showSidebar && !isMobile? "none":"block"}}> {truck.time} </p>
               </div>
             ))}
           </div>
+          <div className='overlay' style={{display: showSidebar? "block":"none"}} onClick={()=>setShowSidebar(false)}/>
           <div className="sideBar" style={{ display: showSidebar ? "block" : "none" }}>
             {selectedTruck.company ? (
               <>

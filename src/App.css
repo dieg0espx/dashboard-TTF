@@ -662,6 +662,7 @@
   border-radius: 5px;
   border: 2px solid transparent;
   background-color: #65D1B5;
+  color: #282c34;
 }
 .form-newAutocomplete button:hover {
   border: 2px solid #65D1B5;
@@ -1692,6 +1693,8 @@ overflow-y: scroll;
 
 /* ========= MOBILE STYLES  ======== */
 @media screen and (max-width:600px ) {
+
+  /* ORDERS PAGE */
   .wrapper-orders {
     display: block;
     padding-top: 50px;
@@ -1708,12 +1711,151 @@ overflow-y: scroll;
   .wrapper-orders .full-order {
     font-size: 15px;
   }
-  .wrapper-orders .includeDrawings {
-    display: none  !important;
+
+  /* ORDER PAGE */
+  .wrapper-order {
+    padding-top: 60px;
+    display: block;
+    padding-bottom: 50px;
+  }
+  .wrapper-order .header {
+    display: block;
+  }
+  .wrapper-order .header .includeDrawings {
+    margin: 10px auto 10px 0;
+  }
+  .update-element {
+    width: 100%;
+    bottom: 0px;left: 0;
+    transform: translate(0);
+  }
+  .update-element h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+  .update-element #legend {
+    margin: 10px auto 10px auto;
+  }
+  .update-element .details-element {
+    display: grid;
+    grid-template-columns: auto auto;
+    font-size: 18px;
+  }
+  .update-element .details-element input {
+    font-size: 18px;
+  }
+
+  /* NEW ORDER PAGE */
+  .wrapper-newOrder {
+    display: block;
+    padding-top: 60px;
+    padding-bottom: 50px;
+  }
+  .wrapper-newOrder h1 {
+    font-size: 30px;
+  }
+  .wrapper-newOrder .header {
+    padding: 20px;
+  }
+  .wrapper-newOrder .content {
+  }
+  .wrapper-newOrder .field {
+    grid-template-columns: auto 100px;
+  }
+
+  .form-newOrder {
+    overflow-y: scroll;
+  }
+  .wrapper-autocompletes {
+    width: 100% !important;
+    transform: translate(0);
+    left: 0;
+    top: auto;
+    bottom: 0;
+    display: block;
+    height: 80%;
+  }
+  .wrapper-autocomplete {
+    width: 100%;
+    height: 100%;
+    padding-top: 20px;
+  }
+  .wrapper-autocomplete .header {
+    width: 100%;
+  }
+  .wrapper-autocomplete .searchBar {
+    width: 95%;
+  }
+  .row-autoComplete {
+    width: 95%;
+  }
+
+  .wrapper-newAutocomplete {
+    width: 100% !important;
+    transform: translate(0);
+    left: 0;
+    top: auto;
+    bottom: 0;
+    display: block;
+    height: 100%;
+  }
+  .wrapper-newAutocomplete .header {
+    width: 100%;
+    padding-top: 30px;
+  }
+  .wrapper-newAutocomplete h2 {
+    padding-left: 70px;
+  }
+  .form-newAutocomplete {
+    margin-top: 60px;
+  }
+  .jobsites-autoComplete {
+    height: 80%;
   }
 
 
+  /* TRUCKS PAGE */
+  .wrapper-trucksPage {
+    display: block;
+    padding-top: 50px;
+  }
+  .wrapper-trucksPage .trucks {
+    width: 100%;
+  }
+
+  .wrapper-trucksPage .trucks .row {
+    display: block;
+    height: fit-content;
+    text-align: left !important;
+    padding: 15px;
+  }
+  .wrapper-trucksPage .main-grid {
+    display: block;
+    grid-template-columns: 100%;
+  }
+  .wrapper-trucksPage .shortRow {
+    display: block;
+    height: fit-content;
+    text-align: left !important;
+    padding: 15px;
+  }
+  
 
 
+
+  .wrapper-trucksPage #company {
+    font-weight: bold;
+  }
+  .wrapper-trucksPage .sideBar {
+    position: fixed;
+    width: 100%;
+    height: 70vh;
+    left: 0;
+    bottom: 0;
+  }
+  .wrapper-trucksPage .image-popup {
+    width: 100%;
+    height: 33%;
+  }
 
 }
