@@ -18,7 +18,7 @@ function Payroll() {
     const [otHours, setOtHours] = useState()
     const [date, setDate] = useState()
 
-    const [showSidebar, setShowSidebar] = useState(true)
+    const [showSidebar, setShowSidebar] = useState(false)
     const [enableSwitch, setEnableSwitch] = useState(false)
     const [selectedEmployeeCodes, setSelectedEmployeeCodes] = useState([]);
     const [rangeDates, setRangeDates] = useState([])
@@ -30,10 +30,16 @@ function Payroll() {
     const [filterFrom, setFilterFrom] = useState()
     const [filterTo, setFilterTo] = useState()
     const [filterCode, setFilterCode] = useState('')
+    const [isMobile, setIsMobile] = useState(false)
 
     useEffect(()=>{
         getHours()
         getEmployees()
+        if(window.innerWidth < 600) {
+          setIsMobile(true)
+        } else {
+          setIsMobile(false)
+        }
     },[])
 
     function getHours() {
@@ -273,8 +279,33 @@ function Payroll() {
                })
               }
             </div>
-            <div className='hours' style={{display: filterCode == '' ? "block":"none"}}>
+            <div className='hours' style={{display: filterCode == ''  && isMobile? "block":"none"}}>
               {hours.map((row) => {                 
+                   return (
+                     <div key={row.id} className='row' onClick={() =>   updateRow(row.id, row.name, row.signIn, row.signOut, row.date) } style={{   gridTemplateColumns: showSidebar ? '70px 150px auto auto auto auto auto': '120px 150px auto auto auto auto auto' }}>
+                       <div className='two-col' style={{display: isMobile? "none":"grid"}}> 
+                        <p> {row.code}</p>
+                        <p id='name'> <b>{row.name}</b></p> 
+                       </div>
+                       <div className='two-col' style={{display: isMobile? "flex":"none"}}>
+                        <p id='name'> <b>{row.name}</b></p>
+                        <p> {formatDate(row.date)}</p>
+                       </div>
+                       <div className='two-col'>
+                       <p>{isMobile ? (<span><strong>Signed In:</strong> {row.signIn}</span>) : (row.signIn)} </p>
+                       <p>{isMobile ? (<span><strong>Signed Out:</strong> {row.signOut}</span>) : (row.signOut)} </p>
+                       </div>
+                       <div className='two-col'>
+                        <p>{isMobile ? (<span><strong>Reg Hrs:</strong> {row.regHours}</span>) : (row.regHours)} </p>
+                        <p>{isMobile ? (<span><strong>O.T Hrs:</strong> {row.otHours}</span>) : (row.otHours)} </p>
+                       </div>
+                      <p style={{display: isMobile? "none":"block"}}> {formatDate(row.date)}</p>
+                     </div>
+                   )})
+              }
+            </div>
+             <div className='hours' style={{display: filterCode == ''  && !isMobile? "block":"none"}}>
+             {hours.map((row) => {                 
                    return (
                      <div key={row.id} className='row' onClick={() =>   updateRow(row.id, row.name, row.signIn, row.signOut, row.date) } style={{   gridTemplateColumns: showSidebar ? '70px 150px auto auto auto auto auto': '120px 150px auto auto auto auto auto' }}>
                        <p>{row.code}</p>

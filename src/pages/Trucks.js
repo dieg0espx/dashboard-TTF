@@ -77,7 +77,7 @@ function Trucks() {
               </div>
             ))}
           </div>
-          <div className='overlay' style={{display: showSidebar? "block":"none"}} onClick={()=>setShowSidebar(false)}/>
+          <div className='overlay' style={{display: showSidebar && isMobile? "block":"none"}} onClick={()=>setShowSidebar(false)}/>
           <div className="sideBar" style={{ display: showSidebar ? "block" : "none" }}>
             {selectedTruck.company ? (
               <>

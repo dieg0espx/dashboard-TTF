@@ -91,15 +91,16 @@
   left: 0;
   width: 100%;
   background-color: #282c34;
-  padding: 20px;
+
   display: none;
   animation: mobileMenu 0.4s;
   z-index: 998;
+  border-bottom: 1px solid ligh;
 }
 .mobileMenu button{
   display: block;
   width: 100%;
-  height: 40px;
+  height: fit-content;
   font-size: 18px;
   background-color: transparent;
   border: none;
@@ -107,6 +108,12 @@
   display: flex;
   gap: 20px;
   text-align: left;
+  border-bottom: 1px solid #202124;
+  padding-left: 10px;
+  padding: 15px 20px;
+}
+.mobileMenu button:hover{
+  color: #65D1B5;
 }
 
 .wrapper-sidebar .menu {
@@ -132,6 +139,10 @@
 }
 .wrapper-sidebar .selected {
   color: #65D1B5 !important;
+}
+
+.menu .selected, .mobileMenu .selected {
+  color: #65D1B5;
 }
 
 @keyframes mobileMenu {
@@ -757,7 +768,6 @@
 
 .wrapper-payroll .row #name {
   text-align: left;
-  padding-left: 5px;
 }
 
 .wrapper-payroll .popup {
@@ -1751,13 +1761,17 @@ overflow-y: scroll;
     padding-top: 60px;
     padding-bottom: 50px;
   }
+  .wrapper-newOrder .content {
+    height:100%;
+  }
   .wrapper-newOrder h1 {
     font-size: 30px;
   }
   .wrapper-newOrder .header {
     padding: 20px;
   }
-  .wrapper-newOrder .content {
+  .wrapper-newOrder .form-newOrder {
+    height: 100%;
   }
   .wrapper-newOrder .field {
     grid-template-columns: auto 100px;
@@ -1857,5 +1871,24 @@ overflow-y: scroll;
     width: 100%;
     height: 33%;
   }
+
+  /* PAYROLL PAGE */
+  .wrapper-payroll {
+    display: block;
+    padding-top: 50px;
+  }
+  .wrapper-payroll .filter{
+    display: none;  
+  }
+  .wrapper-payroll .row { 
+    display: block !important;
+    text-align: left;
+    height: fit-content;
+    padding: 10px;
+  }
+  .wrapper-payroll .row .two-col {
+    display: flex;
+    justify-content: space-between;
+  } 
 
 }
