@@ -7,7 +7,8 @@ function Orders() {
     const [pastOrders, setPastOrders] = useState([]);
     const [isEditing, setIsEditing]= useState(false)
     const [urlToPrint, setUrlToPrint] = useState('')
-    
+    const [isMobile, setIsMobile] = useState(false)
+
     function isSameDate(date1, date2) {
         return (
           date1.getDate() === date2.getDate() &&
@@ -18,6 +19,11 @@ function Orders() {
     
     useEffect(() => {
         getOrders();
+        if(window.innerWidth < 600){
+          setIsMobile(true)
+        } else {
+          setIsMobile(false)
+        }
     }, []);
 
 
@@ -56,7 +62,7 @@ function Orders() {
         let formattedDate = new Date(date).toLocaleString("en-US", {
             dateStyle: "long",
         })
-        return formattedDate
+        return isMobile? date : formattedDate
     }
 
     
@@ -104,8 +110,8 @@ function Orders() {
                           <p> <b>{order.company}</b> </p>
                           <p> {order.jobsite} </p>
                       </div>
-                      <div id="right">
-                        <p className='includeDrawings' style={{display: order.drawings == 'true'? "block":"none"}}>Include Drawings</p>
+                      <div id="right" style={{display: isMobile && isEditing ? "none":"block"}}>
+                      <p className='includeDrawings' style={{display: order.drawings == 'true' && !isMobile? "block":"none"}}>Include Drawings</p>
                         <p> {formatDate(order.date)} </p>
                       
                       </div>
@@ -126,8 +132,8 @@ function Orders() {
                           <p> <b>{order.company}</b> </p>
                           <p> {order.jobsite} </p>
                       </div>
-                      <div id="right">
-                      <p className='includeDrawings' style={{display: order.drawings == 'true'? "block":"none"}}>Include Drawings</p>
+                      <div id="right" style={{display: isMobile && isEditing ? "none":"block"}}>
+                      <p className='includeDrawings' style={{display: order.drawings == 'true' && !isMobile? "block":"none"}}>Include Drawings</p>
                       <p> {formatDate(order.date)} </p>
                       </div>
                   </div>
@@ -147,8 +153,8 @@ function Orders() {
                           <p> <b>{order.company}</b> </p>
                           <p> {order.jobsite} </p>
                       </div>
-                      <div id="right">
-                      <p className='includeDrawings' style={{display: order.drawings == 'true'? "block":"none"}}>Include Drawings</p>
+                      <div id="right" style={{display: isMobile && isEditing ? "none":"block"}}>
+                      <p className='includeDrawings' style={{display: order.drawings == 'true' && !isMobile? "block":"none"}}>Include Drawings</p>
                       <p> {formatDate(order.date)} </p>
                       </div>
                   </div>
