@@ -1987,4 +1987,37 @@ overflow-y: scroll;
   }
 
 
+  /* INVENTORY */
+
+  .wrapper-inventory {
+    padding-top: 50px;
+    display: block;
+  }
+  .wrapper-inventory .header {
+    display: block;
+    text-align: left;
+  }
+  .wrapper-inventory .header .action-btns{
+    display: none;
+  }
+  .wrapper-inventory .sideBar{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 80%;
+  }
+  .wrapper-inventory .rows-sidebar {
+    padding-bottom: 200px;
+  }
+
+  .wrapper-inventory .sideBar #company, 
+  .wrapper-inventory .sideBar #jobsite,
+  .wrapper-inventory .sideBar #code {
+    font-size: 18px !important;
+  }
+
+  .wrapper-inventory #company, .wrapper-inventory #jobsite {
+    font-size: 15px;
+  }
 }

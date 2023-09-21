@@ -9,10 +9,14 @@ function Inventory() {
     const [selectedCompany, setSelectedCompany] = useState([])
     const [showCero, setShowCero] = useState(false)
     const [showSidebar, setShowSidebar] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
 
 
     useEffect(()=>{
         getInventory()
+        if(window.innerWidth < 600){
+            setIsMobile(true)
+        }
     },[])
 
     async function getInventory() {
@@ -42,7 +46,7 @@ function Inventory() {
                     <i className="bi bi-layout-sidebar-inset-reverse sidebarIcon" onClick={()=>setShowSidebar(!showSidebar)}></i>
                 </div>
             </div>
-            <div className='main-grid' style={{display: showSidebar? "grid":"block"}}>
+            <div className='main-grid' style={{display: showSidebar && !isMobile? "grid":"block"}}>
                 <div className='rows'>
                     {inventory.map((row) => {
                         if (row[1].includes(finding.toUpperCase())) {
@@ -56,6 +60,7 @@ function Inventory() {
                         return null;
                     })}
                 </div>
+                <div className='overlay' style={{display: isMobile && showSidebar? "block":"none"}} onClick={()=>setShowSidebar(false)} />
                 <div className='sideBar' style={{display: showSidebar? "block":"none"}}>
                     <div className='two-col' style={{display: selectedCompany.code ? "flex":"none"}}>
                         <p id="code"><b>CODE:</b> {selectedCompany.code} </p>
