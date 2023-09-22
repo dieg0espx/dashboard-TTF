@@ -411,7 +411,7 @@ function openNewJobsite(){
         </div>
       </div>
       <div className='overlay' style={{display: showAutocomplete? "block":"none"}} onClick={()=>setShowAutocomplete(false)}></div>
-      <div className='wrapper-autocompletes'>
+      <div className='wrapper-autocompletes' style={{display: showAutocomplete? "block":"none"}}>
         <div className='wrapper-autocomplete' style={{display: showAutocomplete && !showNewAutocomplete? "block":"none"}}>
         <div className='header'>
             <h2> Auto Complete</h2>
