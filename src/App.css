@@ -1797,7 +1797,7 @@ overflow-y: scroll;
     height: 100%;
   }
   .wrapper-newOrder .field {
-    grid-template-columns: auto 100px;
+    grid-template-columns: auto auto;
   }
 
 

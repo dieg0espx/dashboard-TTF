@@ -118,6 +118,8 @@ function autoCompleteSelected(company, jobsite, contact, tel) {
     setJobsite(jobsite);
     setContact(contact);
     setTel(tel);
+    setShowAutocomplete(false)
+    setShowNewAutocomplete(false)
 }
 
 function openNewJobsite(){
