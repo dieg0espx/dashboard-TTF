@@ -2131,6 +2131,9 @@ overflow-y: scroll;
   .wrapper-login button {
     font-size: 15px;
   }
-
+  .wrapper-login .remmember {
+    width: 300px;
+    margin: 15px auto;
+  }
 
 }
