@@ -123,6 +123,16 @@
   }
 }
 
+.wrapper-login .remmember {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: wheat;
+  margin-bottom: 20px;
+  position: static;
+  animation: fade 3s ease-in-out;
+}
+
 
 
 /* ====== SIDE BAR ====== */

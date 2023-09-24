@@ -1,11 +1,20 @@
 import React, { useEffect, useState } from 'react'
 import Cookies from 'js-cookie';
 import logo from '../images/logo.png'
+import Switch from "react-switch";
+
 
 function Login(props) {
-    const [username, setUsername] = useState('')
+    const [username, setUsername] = useState(Cookies.get('access'))
     const [password, setPassword] = useState('')
+    const [remmember, setRemmember] = useState(false)
 
+useEffect(()=>{
+    if(Cookies.get('username')){
+        setRemmember(true)
+        setUsername(Cookies.get('username'))
+    }
+},[])
 
     async function checkUser(){
         const data = {username, password};
@@ -15,8 +24,13 @@ function Login(props) {
         .then(response => {
             if(response.status == 200){
                 Cookies.set('access', true, { expires: 1 / 1440 });
+                if(remmember){
+                    Cookies.set('username', username)
+                } else {
+                    Cookies.remove('username')
+                }
                 window.location.reload()
-            }else {
+            } else {
                 alert("USER NOT FOUND :(")
                 setPassword('')
             }
@@ -30,6 +44,11 @@ function Login(props) {
             <img src={logo} />
             <input type='email' placeholder='Username' value={username} onChange={(e)=>setUsername(e.target.value)}/>
             <input type='password'placeholder='Password' value={password} onChange={(e)=>setPassword(e.target.value)}/>
+            <div className='remmember'>
+                <p> Remember me</p>
+                <Switch onChange={()=>setRemmember(!remmember)} checked={remmember} uncheckedIcon={false} checkedIcon={false} onColor='#65D1B5'/>
+            </div>
+            
             <button onClick={()=>checkUser()}> Access </button>
         </div>
     </div>
