@@ -48,6 +48,82 @@
 }
 
 
+/* LOGIN PAGE  */
+
+.wrapper-login {
+  background-color: #202124;
+  height: 100vh;
+  width: 100%;
+}
+
+.wrapper-login .content {
+  /* border: 1px solid red; */
+  width: fit-content;
+  position: fixed;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+}
+.wrapper-login img {
+  display: block;
+  margin: auto;
+  width: 200px;
+  filter: invert(100%);
+  margin-bottom: 30px;
+  animation: logo 1s;
+  position: relative;
+}
+.wrapper-login h2 {
+  color: white;
+  margin: 20px;
+}
+ .wrapper-login input {
+  display: block;
+  width: 300px;
+  height: 40px;
+  background-color: transparent;
+  border: 1px solid #65D1B5;
+  border-radius: 5px;
+  color: lightgray;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 15px;
+  outline: none;
+  animation: fade 3s ease-in-out;
+ }
+
+ .wrapper-login button {
+  width: 300px;
+  height: 45px;
+  background-color: #65D1B5;
+  color: #282c34;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  animation: fade 3s ease-in-out;
+}
+.wrapper-login button:hover {
+  font-weight: bold;
+}
+
+@keyframes logo {
+  from {
+    top: -100px;
+  }
+  to {
+    top: 0;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0; /* Start with full transparency (invisible) */
+  }
+  to {
+    opacity: 1; /* End with full opacity (visible) */
+  }
+}
+
+
 
 /* ====== SIDE BAR ====== */
 
@@ -2023,4 +2099,28 @@ overflow-y: scroll;
   .wrapper-inventory #company, .wrapper-inventory #jobsite {
     font-size: 15px;
   }
+
+
+  .wrapper-login {
+    
+  }
+  .wrapper-login .content {
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    
+  }
+  .wrapper-login img {
+    width: 150px;
+  }
+  .wrapper-login input {
+    width: 300px;
+    margin: 10px auto;
+  }
+  .wrapper-login button {
+    font-size: 15px;
+  }
+
+
 }

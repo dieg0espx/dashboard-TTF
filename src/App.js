@@ -11,47 +11,28 @@ import PrintPayroll from './pages/PrintPayroll';
 import Inventory from './pages/Inventory';
 import Forklifts from './pages/Forklifts';
 import Damages from './pages/Damages';
+import ProtectedRoutes from './ProtectedRoutes';
 
 function App() {
   return (
     <div>
-      {/* <Router> */}
-        <div className="App">
-          <Routes>
-            <Route path='/'  element={<Orders />} />
-          </Routes>
-          <Routes>
-            <Route path='/orders'  element={<Orders />} />
-          </Routes>
-          <Routes>
-            <Route path='/order'  element={<Order />} />
-          </Routes>
-          <Routes>
-            <Route path='/sheet'  element={<Sheet />} />
-          </Routes>
-          <Routes>
-            <Route path='/newOrder'  element={<NewOrder />} />
-          </Routes>
-          <Routes>
-            <Route path='/trucks'  element={<Trucks />} />
-          </Routes>
-          <Routes>
-            <Route path='/payroll'  element={<Payroll />} />
-          </Routes>
-          <Routes>
-            <Route path='/printPayroll'  element={<PrintPayroll />} />
-          </Routes>
-          <Routes>
-            <Route path='/inventory'  element={<Inventory />} />
-          </Routes>
-          <Routes>
-            <Route path='/forklifts'  element={<Forklifts />} />
-          </Routes>
-          <Routes>
-            <Route path='/damages'  element={<Damages />} />
-          </Routes>
-        </div>
-      {/* </Router> */}
+      <div className="App">
+        <Routes>
+          <Route element={<ProtectedRoutes />}>
+            <Route path='/' element={<Orders />} />
+            <Route path='/orders' element={<Orders />} />
+            <Route path='/order' element={<Order />} />
+            <Route path='/sheet' element={<Sheet />} />
+            <Route path='/newOrder' element={<NewOrder />} />
+            <Route path='/trucks' element={<Trucks />} />
+            <Route path='/payroll' element={<Payroll />} />
+            <Route path='/printPayroll' element={<PrintPayroll />} />
+            <Route path='/inventory' element={<Inventory />} />
+            <Route path='/forklifts' element={<Forklifts />} />
+            <Route path='/damages' element={<Damages />} />
+          </Route>
+        </Routes>
+      </div>
     </div>
   );
 }
