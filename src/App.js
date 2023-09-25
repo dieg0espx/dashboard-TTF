@@ -14,6 +14,7 @@ import Damages from './pages/Damages';
 import ProtectedRoutes from './ProtectedRoutes';
 
 function App() {
+
   return (
     <div>
       <div className="App">
@@ -38,3 +39,5 @@ function App() {
 }
 
 export default App;
+
+

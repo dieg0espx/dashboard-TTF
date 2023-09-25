@@ -32,6 +32,8 @@ function Payroll() {
     const [filterCode, setFilterCode] = useState('')
     const [isMobile, setIsMobile] = useState(false)
 
+    const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
+
     useEffect(()=>{
         getHours()
         getEmployees()
@@ -45,7 +47,7 @@ function Payroll() {
     function getHours() {
       const threeMonthsAgo = new Date();
       threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 5);
-      fetch('https://api.ttfconstruction.com/getHours.php')
+      fetch(apiURL + '/getHours.php')
         .then(response => response.json())
         .then(response => {
           let formattedResponse = response.map(item => ({
@@ -181,7 +183,7 @@ function Payroll() {
     }
   
     function getEmployees() {
-      fetch('https://api.ttfconstruction.com/getEmployees.php')
+      fetch(apiURL + '/getEmployees.php')
       .then(response => response.json())
       .then(response => {
           const filteredEmployees = response.filter(employee =>
@@ -196,7 +198,6 @@ function Payroll() {
           console.error('Error fetching employee data:', error);
       });
     }
-
 
     const handleEmployeeClick = (employeeCode) => {
       if (selectedEmployeeCodes.includes(employeeCode)) {

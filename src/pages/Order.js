@@ -13,6 +13,7 @@ function Order() {
     const [isMobile, setIsMobile] = useState(false)
   
     const inputRef = useRef(null);
+    const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
     
     useEffect(()=>{
      fetchData()
@@ -31,7 +32,7 @@ function Order() {
     }
 
     function fetchData(){
-      fetch('https://api.ttfconstruction.com/getOrderByID.php?id=' +  getID())
+      fetch(apiURL + '/getOrderByID.php?id=' +  getID())
       .then(response => response.json())
       .then(response => setOrder(response))
     }
@@ -57,7 +58,7 @@ function Order() {
     }
 
     async function updateElement(id, value, code){
-      await fetch(`https://api.ttfconstruction.com/updateOrder.php?id=` + getID() + '&&code=' + code + '&&value=' + value)
+      await fetch(`${apiURL}/updateOrder.php?id=` + getID() + '&&code=' + code + '&&value=' + value)
       fetchData()
       setNameToUpdate('')
       setValueToUpdate('')

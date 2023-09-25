@@ -9,8 +9,10 @@ function FormNewJobsite(props) {
     const [contact, setContact] = useState()
     const [tel, setTel] = useState()
 
+    const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
+
     useEffect(()=>{
-        fetch('https://api.ttfconstruction.com/getJobsites.php')
+        fetch(apiURL + '/getJobsites.php')
         .then(response => response.json())
         .then(response => {
             const sortedJobsites = response.sort((a, b) => a.companyName.localeCompare(b.companyName));
@@ -40,7 +42,7 @@ function FormNewJobsite(props) {
     function saveNewJobsite(){
         const data = {code:randomNumber, company, jobsite, contact, tel};
         const jsonString = JSON.stringify(data);
-        fetch('https://api.ttfconstruction.com/newJobsite.php?data=' + jsonString)
+        fetch( apiURL + '/newJobsite.php?data=' + jsonString)
         .then(response => response.json())
         .then(response => console.log(response))
 

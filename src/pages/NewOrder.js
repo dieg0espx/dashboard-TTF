@@ -90,8 +90,10 @@ function NewOrder() {
 
     const [drawings, setDrawings] = useState(false)
 
+    const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
+
     useEffect(()=>{
-      fetch('https://api.ttfconstruction.com/getJobsites.php')
+      fetch( apiURL + '/getJobsites.php')
       .then(response => response.json())
       .then(response => {
           const sortedJobsites = response.sort((a, b) => a.companyName.localeCompare(b.companyName));
@@ -99,12 +101,10 @@ function NewOrder() {
         });
   },[])
 
-
-
   function saveNewOrder(){
     const data = {company, jobsite, contact, tel, date, af6x4, af5x4, af4x4, sf6x4, sf5x4, sf4x4, sf3x4, cb10x4, cb10x2, cb7x4, cb7x2, cb5x4, cb5x2, cb4x4, cb4x2, afc, sfc, bc, auh, abp, suh, sbp, ab20, ab18, ab16, ab14, ab13, ab12, ab11, ab106, ab10, ab9, ab8, ab7, ab6, ab5, ab4, sh1, sh2, sh3, sh4, wb12, wb11, wb10, wb9, wb8, wb7, wb6, wb5, wb4, extraA, extraB, extraC, extraD, extraE, extra1, extra2, extra3, extra4, extra5, drawings: drawings?"true":"false", done:''};
     const jsonString = JSON.stringify(data);
-    fetch('https://api.ttfconstruction.com/newOrder.php?data=' + jsonString)
+    fetch( apiURL + '/newOrder.php?data=' + jsonString)
     .then(response => response.json())
     .then(response => console.log(response))
     alert("New Order added successfully !")
@@ -396,17 +396,10 @@ function openNewJobsite(){
             <input className='extras' type='text' placeholder='Extra E' onChange={(e)=>setExtraE(e.target.value)}/>
             <input type='tel' placeholder='0' onChange={(e)=>setExtra5(e.target.value)}/> 
           </div>
-       
-       
-
           <div className='grid-drawings'>
             <Switch onChange={()=>setDrawings(!drawings)} checked={drawings} uncheckedIcon={false} checkedIcon={false} onColor='#65D1B5'/>
             <p> Include Drawings </p>
           </div>
-         
-          
-
-
           <button onClick={()=>saveNewOrder()}> Save Order </button>
         </div>
       </div>

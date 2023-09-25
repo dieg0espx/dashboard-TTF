@@ -9,6 +9,8 @@ function Login(props) {
     const [password, setPassword] = useState('')
     const [remmember, setRemmember] = useState(false)
 
+    const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
+
 useEffect(()=>{
     if(Cookies.get('username')){
         setRemmember(true)
@@ -19,7 +21,7 @@ useEffect(()=>{
     async function checkUser(){
         const data = {username, password};
         const jsonString = JSON.stringify(data);
-        await fetch('https://api.ttfconstruction.com/checkUser.php?data=' + jsonString)
+        await fetch( apiURL + '/checkUser.php?data=' + jsonString)
         .then(response => response.json())
         .then(response => {
             if(response.status == 200){

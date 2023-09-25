@@ -5,10 +5,11 @@ import '../Sheet.css'
 function Sheet() {
 
   const [elements, setElements] = useState([])
+  const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
 
   useEffect(()=>{
       const searchParams = new URLSearchParams(window.location.search);
-      fetch('https://api.ttfconstruction.com/getOrderByID.php?id=' + getID() )
+      fetch( apiURL + '/getOrderByID.php?id=' + getID() )
       .then(response => response.json())
       .then(response => setElements(response[0]))
       setTimeout(window.print,1000)

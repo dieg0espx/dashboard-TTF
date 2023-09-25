@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react'
-import Sidebar from '../components/Sidebar'
+import Sidebar from '../components/Sidebar' 
+
 
 function Orders() {
     const [todayOrders, setTodayOrders] = useState([]);
@@ -8,6 +9,9 @@ function Orders() {
     const [isEditing, setIsEditing]= useState(false)
     const [urlToPrint, setUrlToPrint] = useState('')
     const [isMobile, setIsMobile] = useState(false)
+
+    const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
+
 
     function isSameDate(date1, date2) {
         return (
@@ -28,7 +32,7 @@ function Orders() {
 
 
     function getOrders(){
-      fetch('https://api.ttfconstruction.com/getOrders.php')
+      fetch(apiURL + '/getOrders.php')
         .then(response => response.json())
         .then(response => {
           const today = new Date();
@@ -84,7 +88,7 @@ function Orders() {
     }
 
     function deleteOrder(id){
-      fetch('https://api.ttfconstruction.com/deleteOrder.php?id=' + id );
+      fetch(apiURL + '/deleteOrder.php?id=' + id );
       getOrders();
     }
 

@@ -8,6 +8,8 @@ function Forklifts() {
     const [selectedForklift, setSelectedForklift] = useState([])
     const [isMobile, setIsMobile] = useState(false)
 
+    const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
+
     let rules = [
         'Check the forks or attachment are in the lowered position and the park brake is applied.',
         'Observe condition of the forks, and the lock pins or the lifting attachment.',
@@ -48,7 +50,7 @@ function Forklifts() {
 
     
     function getForklifts() {
-        fetch('https://api.ttfconstruction.com/getForklifts.php')
+        fetch( apiURL + '/getForklifts.php')
         .then(response => response.json())
         .then(response => {
             const sortedForklifts = response.sort((a, b) => new Date(b.date) - new Date(a.date));

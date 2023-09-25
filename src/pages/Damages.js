@@ -11,6 +11,8 @@ function Damages() {
     const [showPopup, setShowPopup] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
 
+    const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
+
     useEffect(()=>{
         getDamages()
         if(window.innerWidth < 600){
@@ -19,7 +21,7 @@ function Damages() {
     },[])
 
     function getDamages() {
-        fetch('https://api.ttfconstruction.com/getDamages.php')
+        fetch(apiURL+ '/getDamages.php')
         .then(response => response.json())
         .then(response => {
             const sortedDamages = response.sort((a, b) => {
@@ -74,8 +76,8 @@ function Damages() {
                       <p id="location">{damageSelected.location}</p>
                       <p id="date">{formatDate(damageSelected.date)}</p>
                       <p id="description"><b>Description: </b>{damageSelected.description}</p>
-                      <iframe src={`https://api.ttfconstruction.com/getDamage.php?id=${damageSelected.id}`} />
-                      <div className='imageOpener' onClick={() => openImage(`https://api.ttfconstruction.com/getDamage.php?id=${damageSelected.id}`)}></div>
+                      <iframe src={`${apiURL}/getDamage.php?id=${damageSelected.id}`} />
+                      <div className='imageOpener' onClick={() => openImage(`${apiURL}/getDamage.php?id=${damageSelected.id}`)}></div>
                       <div className='overlay' style={{ display: showPopup ? "block" : "none" }} onClick={() => setShowPopup(false)}></div>
                       <div className='image-popup' style={{ display: showPopup ? "block" : "none" }}>
                         <iframe src={selectedImage} />

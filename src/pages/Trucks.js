@@ -11,13 +11,15 @@ function Trucks() {
   const [selectedImage, setSelectedImage] = useState('')
   const [isMobile, setIsMobile] = useState(false)
 
+  const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
+
     useEffect(()=>{
         getTrucks()
         window.innerWidth < 600 ? setIsMobile(true):setIsMobile(false)
     },[])
 
     function getTrucks() {
-      fetch('https://api.ttfconstruction.com/getTrucks.php')
+      fetch( apiURL + 'getTrucks.php')
       .then(response => response.json())
       .then(response => {
           // console.log(response);
@@ -88,36 +90,36 @@ function Trucks() {
                 <p>{selectedTruck.time}</p>
                 <br />
                 <iframe
-                  src={'https://api.ttfconstruction.com/getImage1.php?id=' + selectedTruck.id}
+                  src={apiURL+'/getImage1.php?id=' + selectedTruck.id}
                   onClick={() => console.log('a')}
                   title="Image 1"
                 />
                 <div
                   className='imageOpener'
                   onClick={() =>
-                    openImage('https://api.ttfconstruction.com/getImage1.php?id=' + selectedTruck.id)
+                    openImage(apiURL + '/getImage1.php?id=' + selectedTruck.id)
                   }
                 />
                 <iframe
-                  src={'https://api.ttfconstruction.com/getImage2.php?id=' + selectedTruck.id}
+                  src={apiURL + '/getImage2.php?id=' + selectedTruck.id}
                   onClick={() => openImage(2)}
                   title="Image 2"
                 />
                 <div
                   className='imageOpener'
                   onClick={() =>
-                    openImage('https://api.ttfconstruction.com/getImage2.php?id=' + selectedTruck.id)
+                    openImage(apiURL + '/getImage2.php?id=' + selectedTruck.id)
                   }
                 />
                 <iframe
-                  src={'https://api.ttfconstruction.com/getImage3.php?id=' + selectedTruck.id}
+                  src={apiURL + '/getImage3.php?id=' + selectedTruck.id}
                   onClick={() => openImage(3)}
                   title="Image 3"
                 />
                 <div
                   className='imageOpener'
                   onClick={() =>
-                    openImage('https://api.ttfconstruction.com/getImage3.php?id=' + selectedTruck.id)
+                    openImage(apiURL + '/getImage3.php?id=' + selectedTruck.id)
                   }
                 />
               </>
