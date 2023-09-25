@@ -19,7 +19,7 @@ function Trucks() {
     },[])
 
     function getTrucks() {
-      fetch( apiURL + 'getTrucks.php')
+      fetch( apiURL + '/getTrucks.php')
       .then(response => response.json())
       .then(response => {
           // console.log(response);
