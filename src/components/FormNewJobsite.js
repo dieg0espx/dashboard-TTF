@@ -48,8 +48,8 @@ function FormNewJobsite(props) {
         setJobsite('')
         setContact('')
         setTel('')
-        // alert("New Jobsite added successfully !")
-        // window.location.reload();
+        alert("New Jobsite added successfully !")
+        window.location.reload();
     }
 
 

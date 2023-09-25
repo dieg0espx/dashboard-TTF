@@ -20,8 +20,7 @@ function Trucks() {
       fetch('https://api.ttfconstruction.com/getTrucks.php')
       .then(response => response.json())
       .then(response => {
-          console.log(response);
-          // Assuming the response is an array of truck objects with a "date" property
+          // console.log(response);
           const sortedTrucks = response.sort((a, b) => new Date(b.date) - new Date(a.date));
           setTrucks(sortedTrucks);
       })

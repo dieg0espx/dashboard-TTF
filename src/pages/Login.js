@@ -23,7 +23,7 @@ useEffect(()=>{
         .then(response => response.json())
         .then(response => {
             if(response.status == 200){
-                Cookies.set('access', true, { expires: 1 / 1440 });
+                Cookies.set('access', true, { expires: 480 / 1440 });
                 if(remmember){
                     Cookies.set('username', username)
                 } else {

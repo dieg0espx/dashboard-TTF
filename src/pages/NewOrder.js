@@ -103,9 +103,7 @@ function NewOrder() {
 
   function saveNewOrder(){
     const data = {company, jobsite, contact, tel, date, af6x4, af5x4, af4x4, sf6x4, sf5x4, sf4x4, sf3x4, cb10x4, cb10x2, cb7x4, cb7x2, cb5x4, cb5x2, cb4x4, cb4x2, afc, sfc, bc, auh, abp, suh, sbp, ab20, ab18, ab16, ab14, ab13, ab12, ab11, ab106, ab10, ab9, ab8, ab7, ab6, ab5, ab4, sh1, sh2, sh3, sh4, wb12, wb11, wb10, wb9, wb8, wb7, wb6, wb5, wb4, extraA, extraB, extraC, extraD, extraE, extra1, extra2, extra3, extra4, extra5, drawings: drawings?"true":"false", done:''};
-
     const jsonString = JSON.stringify(data);
-  
     fetch('https://api.ttfconstruction.com/newOrder.php?data=' + jsonString)
     .then(response => response.json())
     .then(response => console.log(response))
@@ -424,7 +422,10 @@ function openNewJobsite(){
         </div>
         <div className='jobsites-autoComplete'>
             {jobsites.map(jobsite => {
-                if (jobsite.companyName.includes(finding) || jobsite.jobsite.includes(finding)) {
+                if (
+                  jobsite.companyName.toLowerCase().includes(finding.toLowerCase()) ||
+                  jobsite.jobsite.toLowerCase().includes(finding.toLowerCase())
+                ) {
                     return (
                       <div key={jobsite.id} className='row-autoComplete' onClick={()=>autoCompleteSelected(jobsite.companyName, jobsite.jobsite, jobsite.contact, jobsite.tel)}>
                         <p id="company">{jobsite.companyName}</p>

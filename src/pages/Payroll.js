@@ -45,8 +45,6 @@ function Payroll() {
     function getHours() {
       const threeMonthsAgo = new Date();
       threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 5);
-    
-      console.log(rangeDates);
       fetch('https://api.ttfconstruction.com/getHours.php')
         .then(response => response.json())
         .then(response => {
@@ -169,7 +167,6 @@ function Payroll() {
             payroll.push({code: code, name: name, reg: reg.toFixed(2), ot:ot.toFixed(2), tot:tot.toFixed(2)})
           }
         } 
-        console.log(payroll);
         printPayroll( "#/printPayroll/?data=" + JSON.stringify(payroll) + "&&from=" +  from + "&&to=" + to) 
       }
     }

@@ -33,10 +33,7 @@ function Order() {
     function fetchData(){
       fetch('https://api.ttfconstruction.com/getOrderByID.php?id=' +  getID())
       .then(response => response.json())
-      .then(response => {
-        console.log(response);
-        setOrder(response)
-      })
+      .then(response => setOrder(response))
     }
 
     function formatDate(date, daysToAdd = 0) {

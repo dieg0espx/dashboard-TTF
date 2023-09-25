@@ -8,7 +8,6 @@ function ProtectedRoutes() {
     const [access, setAccess] = useState(false)
 
     const useAuth = () => {
-        console.log("Reading cookies ....");
         const user = {loggedIn:Cookies.get('access')};
         return user && user.loggedIn;
     };

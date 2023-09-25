@@ -73,7 +73,6 @@ function Forklifts() {
 
     function selectForklift(id){
         setShowSidebar(true)
-       console.log(forklifts[id]);
        setSelectedForklift(forklifts[id]);
     }
 
