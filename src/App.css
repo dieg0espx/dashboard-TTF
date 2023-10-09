@@ -1331,6 +1331,18 @@ abbr[title] {
   padding-left: 35px;
 }
 
+.wrapper-trucksPage .shippingBullet {
+  font-size: 10px;
+  margin-right: 5px;
+  color: #65D1B5;
+}
+.wrapper-trucksPage .returnBullet {
+  font-size: 10px;
+  margin-right: 5px;
+  color: coral;
+}
+
+
 .wrapper-trucksPage #company {
   text-transform: uppercase;
   text-align: left;
@@ -1355,6 +1367,10 @@ abbr[title] {
   font-size: 30px;
   margin-bottom: 20px;
 }
+.wrapper-trucksPage .sideBar #status {
+  text-transform: capitalize;
+}
+
 
 .wrapper-trucksPage .sideBar iframe {
   border: none;
@@ -1407,11 +1423,46 @@ abbr[title] {
 
 /* ======= INVENTORY PAGE ======= */
 
+
 .wrapper-inventory {
   display: grid;
   grid-template-columns: 250px auto;
   background-color: #202124;
   color: lightgray;
+}
+
+
+.wrapper-inventory .inventory-loader {
+  position: relative;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
+  width: 50%;
+}
+
+.loader {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #65D1B5;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  margin-bottom: 50px;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+} 
+.wrapper-inventory .inventory-loader h2{
+  font-size: 20px;
+  font-weight: 300;
 }
 
 .wrapper-inventory .header {
@@ -1428,9 +1479,9 @@ abbr[title] {
 
 
 .wrapper-inventory .row {
-  display: flex;
-  flex-direction: column;
-  justify-content:center;
+  display: grid;
+  grid-template-columns: auto 50px;
+  align-items: center;
   border: 1px solid transparent;
   background-color: #282c34;
   height: 70px;
@@ -1445,11 +1496,11 @@ abbr[title] {
   border: 1px solid #65D1B5;
   padding-left: 30px;
 }
+
 .wrapper-inventory .rows {
   height: calc(100vh - 100px);
   overflow-y: scroll;
 }
-
 .wrapper-inventory #company {
   text-align: left;
   font-size: 20px;
@@ -1457,6 +1508,12 @@ abbr[title] {
 }
 .wrapper-inventory #jobsite {
   text-align: left;
+}
+
+.wrapper-inventory .btnPrint {
+  display: block;
+  width: 50px;
+  height: 50px;
 }
 
 .wrapper-inventory input {
@@ -1507,6 +1564,16 @@ abbr[title] {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 10px;
+}
+.wrapper-inventory  .btnPrint {
+  font-size: 20px;
+  display: block;
+  line-height: 50px;
+  color: lightgray;
+}
+.wrapper-inventory .btnPrint:hover {
+  color: #65D1B5;
 }
 .wrapper-inventory .sideBar #code {
   font-size: 20px;

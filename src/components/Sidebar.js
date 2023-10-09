@@ -54,7 +54,7 @@ function Sidebar() {
             <button className={selected == 0? "selected":""} onClick={()=>window.location.href = '#/orders'}>    <i className="bi bi-list-check"></i> Orders </button>
             <button className={selected == 1? "selected":""} onClick={()=>window.location.href = '#/trucks'}>    <i className="bi bi-truck"></i> Trucks </button>
             <button className={selected == 2? "selected":""} onClick={()=>window.location.href = '#/inventory'}> <i className="bi bi-boxes"></i> Inventory </button>
-            <button className={selected == 3? "selected":""} onClick={()=>window.location.href = '#/damages'}>   <i className="bi bi-shield-exclamation"></i> Damages </button>
+            {/* <button className={selected == 3? "selected":""} onClick={()=>window.location.href = '#/damages'}>   <i className="bi bi-shield-exclamation"></i> Damages </button> */}
             <button className={selected == 4? "selected":""} onClick={()=>window.location.href = '#/forklifts'}> <i className="bi bi-gear"></i> Forklifts </button>
             <button className={selected == 5? "selected":""} onClick={()=>window.location.href = '#/payroll'}>   <i className="bi bi-clock"></i> Payroll </button>
         </div>
@@ -63,7 +63,7 @@ function Sidebar() {
         <button className={selected == 0? "selected":""} onClick={()=>window.location.href = '#/orders'}>    <i className="bi bi-list-check"></i> Orders </button>
         <button className={selected == 1? "selected":""} onClick={()=>window.location.href = '#/trucks'}>    <i className="bi bi-truck"></i> Trucks </button>
         <button className={selected == 2? "selected":""} onClick={()=>window.location.href = '#/inventory'}> <i className="bi bi-boxes"></i> Inventory </button>
-        <button className={selected == 3? "selected":""} onClick={()=>window.location.href = '#/damages'}>   <i className="bi bi-shield-exclamation"></i> Damages </button>
+        {/* <button className={selected == 3? "selected":""} onClick={()=>window.location.href = '#/damages'}>   <i className="bi bi-shield-exclamation"></i> Damages </button> */}
         <button className={selected == 4? "selected":""} onClick={()=>window.location.href = '#/forklifts'}> <i className="bi bi-gear"></i> Forklifts </button>
         <button className={selected == 5? "selected":""} onClick={()=>window.location.href = '#/payroll'}>   <i className="bi bi-clock"></i> Payroll </button>
        </div>

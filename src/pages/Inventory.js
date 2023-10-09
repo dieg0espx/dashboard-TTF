@@ -32,7 +32,22 @@ function Inventory() {
         setShowSidebar(true)
     }
 
-    
+    function printInventory(code){
+        let found = false
+        let matchingRow = null;
+        for(let i = 0; i < inventory.length; i ++){ 
+            if(parseInt(code)==inventory[i][0]){
+              let company = inventory[i][1]
+              let jobsite = inventory[i][2]
+              matchingRow = inventory[i];
+              matchingRow[0] = ''
+              matchingRow[1] = ''
+              matchingRow[2] = ''
+              found = true
+              window.open('https://ttfconstruction.com/newInventory/#/printableSheet?code='+code+'&&elements='+matchingRow + '&&company=' + company + '&&jobsite=' + jobsite);
+            }}
+    }
+        
   return (
     <div className='wrapper-inventory'>
         <Sidebar/>
@@ -48,28 +63,41 @@ function Inventory() {
             </div>
             <div className='main-grid' style={{display: showSidebar && !isMobile? "grid":"block"}}>
                 <div className='rows'>
-                    {inventory.map((row) => {
-                        if (row[1].includes(finding.toUpperCase())) {
-                            return (
-                                <div className='row' key={row[0]} onClick={()=>onCompanySelected(row[0], row[1], row[2])}> 
-                                    <p id="company"> {row[0]} - {row[1]}</p>
-                                    <p id="jobsite"> {row[2]}</p>
-                                </div>
-                            );
-                            }
-                        return null;
-                    })}
+                  
+                {inventory.length > 0 ? (
+                  inventory.map((row) => {
+                    if (row[1].includes(finding.toUpperCase())) {
+                      return (
+                        <div className='row' key={row[0]} onClick={() => onCompanySelected(row[0], row[1], row[2])}>
+                            <div>
+                                <p id="company"> {row[0]} - {row[1]}</p>
+                                <p id="jobsite"> {row[2]}</p>
+                             </div>
+
+                        </div>
+                      );
+                    }
+                    return null; // Return null for items that don't match the condition
+                  })
+                ) : (
+                 <div className='inventory-loader'>
+                    <span className="loader"></span>
+                    <h2> Loading ...</h2>
+                 </div>
+                )}          
                 </div>
                 <div className='overlay' style={{display: isMobile && showSidebar? "block":"none"}} onClick={()=>setShowSidebar(false)} />
                 <div className='sideBar' style={{display: showSidebar? "block":"none"}}>
+           
+                    <p id="company"> {selectedCompany.company} </p>
+                    <p id="jobsite"> {selectedCompany.jobsite} </p>
                     <div className='two-col' style={{display: selectedCompany.code ? "flex":"none"}}>
-                        <p id="code"><b>CODE:</b> {selectedCompany.code} </p>
+                        <i class="bi bi-printer btnPrint" onClick={()=>printInventory(selectedCompany.code)}></i>          
                         <div>
                         <Switch onChange={()=>setShowCero(!showCero)} checked={showCero} uncheckedIcon={false} checkedIcon={false} onColor='#65D1B5'/>
                         </div>
+                        
                     </div>   
-                    <p id="company"> {selectedCompany.company} </p>
-                    <p id="jobsite"> {selectedCompany.jobsite} </p>
                     <div className='rows-sidebar'>
                     {selectedCompany.code ? (
                         <>

@@ -22,7 +22,7 @@ function Trucks() {
       fetch( apiURL + '/getTrucks.php')
       .then(response => response.json())
       .then(response => {
-          // console.log(response);
+          console.log(response);
           const sortedTrucks = response.sort((a, b) => new Date(b.date) - new Date(a.date));
           setTrucks(sortedTrucks);
       })
@@ -45,8 +45,8 @@ function Trucks() {
      return formattedDate
  }
 
-  function showTruck(id, company, location, date, time){
-      setSelectedTruck({id, company, location, date, time})
+  function showTruck(id, company, location, date, time, status){
+      setSelectedTruck({id, company, location, date, time, status})
       setShowSidebar(true)
   }
 
@@ -70,8 +70,8 @@ function Trucks() {
         <div className="main-grid" style={{display: showSidebar ? "grid":"block"}}>
           <div className='trucks'>
             {trucks.map((truck) => (
-              <div className={showSidebar? "shortRow":"row"} onClick={()=>showTruck(truck.id, truck.company, truck.location, truck.date, truck.time)}>
-                <p id="company"> {truck.company} </p>
+              <div className={showSidebar? "shortRow":"row"} onClick={()=>showTruck(truck.id, truck.company, truck.location, truck.date, truck.time, truck.status)}>
+                <p id="company"> <i className= {truck.status == 'Return' ? "bi bi-circle-fill returnBullet":"bi bi-circle-fill shippingBullet"}></i> {truck.company} </p>
                 <p> {truck.location} </p>
                 <p> {formatDate(truck.date)} </p>
                 <p style={{display: showSidebar && !isMobile? "none":"block"}}> {truck.time} </p>
@@ -85,6 +85,7 @@ function Trucks() {
                 <p id="company">
                   <b>{selectedTruck.company}</b>
                 </p>
+                <p id="status"><i className= {selectedTruck.status == 'Return' ? "bi bi-circle-fill returnBullet":"bi bi-circle-fill shippingBullet"}></i> {selectedTruck.status}</p>
                 <p>{selectedTruck.location}</p>
                 <p>{formatDate(selectedTruck.date)}</p>
                 <p>{selectedTruck.time}</p>
