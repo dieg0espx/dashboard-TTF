@@ -102,11 +102,11 @@ function Sheet() {
              <td></td>
             </tr>
            <tr>
-             <td className='description'></td>
-             <td> {elements.ab14 > 0 ? elements.ab14 : ""} </td>
+             <td></td>
+             <td></td>
              <td></td>
              <td className='description'> 14’ 0” ALUM.BEAMS (SILVER)</td>
-             <td></td>
+             <td> {elements.ab14 > 0 ? elements.ab14 : ""}</td>
              <td></td>
             </tr>
            <tr>
@@ -142,19 +142,19 @@ function Sheet() {
              <td></td>
             </tr>
            <tr>
-             <td className='description'>  </td>
-             <td> {elements.ab10 > 0 ? elements.ab10 : ""} </td>
+             <td></td>
+             <td></td>
              <td></td>
              <td className='description'> 10.0’ 0” ALUM.BEAMS (BLACK) </td>
-             <td></td>
+             <td> {elements.ab10 > 0 ? elements.ab10 : ""} </td>
              <td></td>
             </tr>
            <tr>
-             <td className='description'>  </td>
-             <td> {elements.ab9 > 0 ? elements.ab9 : ""} </td>
+             <td></td>
+             <td></td>
              <td></td>
              <td className='description'> 9’ 0” ALUM.BEAMS (ORANGE)</td>
-             <td></td>
+             <td>{elements.ab9 > 0 ? elements.ab9 : ""} </td>
              <td></td>
             </tr>
            <tr>
@@ -222,11 +222,11 @@ function Sheet() {
              <td></td>
             </tr>
            <tr>
-             <td className='description'>  </td>
-             <td> {elements.sh3 > 0 ? elements.sh3 : ""} </td>
+             <td></td>
+             <td></td>
              <td></td>
              <td className='description'> NO.3 SHORES</td>
-             <td></td>
+             <td> {elements.sh3 > 0 ? elements.sh3 : ""}</td>
              <td></td>
             </tr>
            <tr>
@@ -270,11 +270,11 @@ function Sheet() {
              <td></td>
             </tr>
            <tr>
-             <td className='description'>  </td>
-             <td> {elements.wb9 > 0 ? elements.wb9 : ""} </td>
+             <td></td>
+             <td></td>
              <td></td>
              <td className='description'> 9'0" 4X6 WOOD BEAMS </td>
-             <td></td>
+             <td> {elements.wb9 > 0 ? elements.wb9 : ""} </td>
              <td></td>
             </tr>
            <tr>
