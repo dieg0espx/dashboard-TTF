@@ -64,7 +64,11 @@ function Trucks() {
       </div>
       <div className='content' >
         <div className='header'>
-          <h1> Trucks </h1>
+          <div id="left">
+            <h1> Trucks </h1>
+            <p><i className='bi bi-circle-fill shippingBullet'></i> Shipping </p>
+            <p><i className='bi bi-circle-fill returnBullet'></i> Return </p>
+          </div>
           <i className="bi bi-layout-sidebar-inset-reverse iconSidebar" onClick={()=>setShowSidebar(!showSidebar)}></i>
         </div>
         <div className="main-grid" style={{display: showSidebar ? "grid":"block"}}>

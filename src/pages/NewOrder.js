@@ -108,7 +108,7 @@ function NewOrder() {
     .then(response => response.json())
     .then(response => console.log(response))
     alert("New Order added successfully !")
-    window.location.href = '/orders';
+    window.location.href = '/#/orders';
 }
 
 function autoCompleteSelected(company, jobsite, contact, tel) {

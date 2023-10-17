@@ -1275,6 +1275,14 @@ abbr[title] {
   margin-bottom: 30px;
   height: 40px;
 }
+.wrapper-trucksPage .header h1 {
+  margin-right: 20px;
+}
+.wrapper-trucksPage .header #left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
 
 .wrapper-trucksPage .header .iconSidebar {
   font-size: 25px;
