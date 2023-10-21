@@ -76,3 +76,9 @@
     padding-left: 5px;
     width: 265px;
   }
+
+
+  .wrapper-sheet #totWeight {
+    text-align: left;
+    margin-top: 15px;
+  }

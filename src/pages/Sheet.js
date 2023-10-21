@@ -5,6 +5,7 @@ import '../Sheet.css'
 function Sheet() {
 
   const [elements, setElements] = useState([])
+  const [totalWeight, setTotalWeight] = useState(0)
   const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
 
   useEffect(()=>{
@@ -12,6 +13,11 @@ function Sheet() {
       fetch( apiURL + '/getOrderByID.php?id=' + getID() )
       .then(response => response.json())
       .then(response => setElements(response[0]))
+
+      fetch( apiURL + '/getWeight.php?id=' + getID() )
+      .then(response => response.json())
+      .then(response => setTotalWeight(response))
+
       setTimeout(window.print,1000)
   },[])
 
@@ -319,6 +325,7 @@ function Sheet() {
             </tr>
           </tbody>
         </table>
+        <p id="totWeight"><b>Total Weight:</b> {totalWeight} lbs</p>
       </div>
     </div>
   )
