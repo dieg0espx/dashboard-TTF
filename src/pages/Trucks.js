@@ -127,6 +127,39 @@ function Trucks() {
                     openImage(apiURL + '/getImage3.php?id=' + selectedTruck.id)
                   }
                 />
+                 <iframe
+                  src={apiURL + '/getImage4.php?id=' + selectedTruck.id}
+                  onClick={() => openImage(4)}
+                  title="Image 4"
+                />
+                <div
+                  className='imageOpener'
+                  onClick={() =>
+                    openImage(apiURL + '/getImage4.php?id=' + selectedTruck.id)
+                  }
+                />
+                <iframe
+                  src={apiURL + '/getImage5.php?id=' + selectedTruck.id}
+                  onClick={() => openImage(5)}
+                  title="Image 5"
+                />
+                <div
+                  className='imageOpener'
+                  onClick={() =>
+                    openImage(apiURL + '/getImage5.php?id=' + selectedTruck.id)
+                  }
+                />
+                 <iframe
+                  src={apiURL + '/getImage6.php?id=' + selectedTruck.id}
+                  onClick={() => openImage(6)}
+                  title="Image 6"
+                />
+                <div
+                  className='imageOpener'
+                  onClick={() =>
+                    openImage(apiURL + '/getImage6.php?id=' + selectedTruck.id)
+                  }
+                />
               </>
             ) : (
               <p className='emptyArray'>Nothing Selected</p>
