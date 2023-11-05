@@ -323,6 +323,32 @@ function Sheet() {
              <td> {elements.wb4 > 0 ? elements.wb4 : ""} </td>
              <td></td>
             </tr>
+
+            <tr style={{display: elements.extra1 > 0 ? "":"none"}}> 
+             <td className='description'> {elements.extraA}  </td>
+             <td>  {elements.extra1 > 0 ? elements.extra1 : ""} </td>
+             <td></td>
+             <td className='description'> {elements.extraB}  </td>
+             <td>  {elements.extra2 > 0 ? elements.extra2 : ""} </td>
+             <td></td>
+            </tr>
+            <tr style={{display: elements.extra3 > 0 ? "":"none"}}> 
+             <td className='description'> {elements.extraC}  </td>
+             <td>  {elements.extra3 > 0 ? elements.extra3 : ""} </td>
+             <td></td>
+             <td className='description'> {elements.extraD}  </td>
+             <td>  {elements.extra4 > 0 ? elements.extra4 : ""} </td>
+             <td></td>
+            </tr>
+            <tr style={{display: elements.extra5 > 0 ? "":"none"}}> 
+             <td className='description'> {elements.extraE}  </td>
+             <td>  {elements.extra5 > 0 ? elements.extra5 : ""} </td>
+             <td></td>
+             <td className='description'> </td>
+             <td> </td>
+             <td></td>
+            </tr>
+          
           </tbody>
         </table>
         <p id="totWeight"><b>Total Weight:</b> {totalWeight} lbs</p>
