@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Sidebar from '../components/Sidebar'
 import FormNewJobsite from '../components/FormNewJobsite'
 import Switch from "react-switch";
@@ -90,6 +90,9 @@ function NewOrder() {
 
     const [drawings, setDrawings] = useState(false)
 
+    const [orderStatus, setOrderStatus] = useState(false)
+    const [urlToPrint, setUrlToPrint] = useState('')
+
     const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
 
     useEffect(()=>{
@@ -100,6 +103,10 @@ function NewOrder() {
           setJobsites(sortedJobsites);
         });
   },[])
+
+  useEffect(()=>{
+    console.log(orderStatus);
+  },[orderStatus])
 
   function saveNewOrder(){
     const data = {company, jobsite, contact, tel, date, af6x4, af5x4, af4x4, sf6x4, sf5x4, sf4x4, sf3x4, cb10x4, cb10x2, cb7x4, cb7x2, cb5x4, cb5x2, cb4x4, cb4x2, afc, sfc, bc, auh, abp, suh, sbp, ab20, ab18, ab16, ab14, ab13, ab12, ab11, ab106, ab10, ab9, ab8, ab7, ab6, ab5, ab4, sh1, sh2, sh3, sh4, wb12, wb11, wb10, wb9, wb8, wb7, wb6, wb5, wb4, extraA, extraB, extraC, extraD, extraE, extra1, extra2, extra3, extra4, extra5, drawings: drawings?"true":"false", done:''};
@@ -125,6 +132,22 @@ function openNewJobsite(){
   setLoad(load+1)
 }
 
+function printReturnSheet(){
+  const data = {company, jobsite, contact, tel, date, af6x4, af5x4, af4x4, sf6x4, sf5x4, sf4x4, sf3x4, cb10x4, cb10x2, cb7x4, cb7x2, cb5x4, cb5x2, cb4x4, cb4x2, afc, sfc, bc, auh, abp, suh, sbp, ab20, ab18, ab16, ab14, ab13, ab12, ab11, ab106, ab10, ab9, ab8, ab7, ab6, ab5, ab4, sh1, sh2, sh3, sh4, wb12, wb11, wb10, wb9, wb8, wb7, wb6, wb5, wb4, extraA, extraB, extraC, extraD, extraE, extra1, extra2, extra3, extra4, extra5, drawings: drawings?"true":"false", done:''};
+  const jsonString = JSON.stringify(data);
+  setUrlToPrint('../#/return-sheet?data=' + jsonString)
+  printSheet('../#/return-sheet?data=' + jsonString)
+}
+
+const iframeRef = useRef(null);
+function printSheet(url){
+  if(url == urlToPrint) {
+    iframeRef.current.contentWindow.location.reload();
+  } else {
+    setUrlToPrint(url)
+  }
+}
+
   return (
     <div className='wrapper-newOrder'>
       <div>
@@ -134,6 +157,11 @@ function openNewJobsite(){
         <div className='header'>
           <h1> New Order </h1>
           <div className='actions'>
+            <div className='shippingReturn'>
+              <p> Shipping</p>
+              <Switch onChange={()=>setOrderStatus(!orderStatus)} checked={orderStatus} uncheckedIcon={false} checkedIcon={false} onColor='#65D1B5'/>
+              <p> Return</p>
+            </div>
             <i className="bi bi-view-list autocompleteIcon" onClick={()=>setShowAutocomplete(true)}></i>
           </div>
         </div>
@@ -400,7 +428,7 @@ function openNewJobsite(){
             <Switch onChange={()=>setDrawings(!drawings)} checked={drawings} uncheckedIcon={false} checkedIcon={false} onColor='#65D1B5'/>
             <p> Include Drawings </p>
           </div>
-          <button onClick={()=>saveNewOrder()}> Save Order </button>
+          <button onClick={orderStatus ? ()=>printReturnSheet():()=>saveNewOrder()}> Save Order </button>
         </div>
       </div>
       <div className='overlay' style={{display: showAutocomplete? "block":"none"}} onClick={()=>setShowAutocomplete(false)}></div>
@@ -439,6 +467,7 @@ function openNewJobsite(){
         </div>
 
       </div>
+      <iframe ref={iframeRef} src={urlToPrint} />
     </div>
   )
 }

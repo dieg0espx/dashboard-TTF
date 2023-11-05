@@ -530,6 +530,14 @@
   align-items: center;
   gap: 30px;
 } 
+.wrapper-newOrder .header .actions .shippingReturn{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 15px;
+  font-weight: bold;
+  outline: none;
+}
 
 .wrapper-newOrder .header .autocompleteIcon{
   font-size: 25px;

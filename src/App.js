@@ -12,6 +12,7 @@ import Inventory from './pages/Inventory';
 import Forklifts from './pages/Forklifts';
 import Damages from './pages/Damages';
 import ProtectedRoutes from './ProtectedRoutes';
+import ReturnSheet from './pages/ReturnSheet';
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
             <Route path='/orders' element={<Orders />} />
             <Route path='/order' element={<Order />} />
             <Route path='/sheet' element={<Sheet />} />
+            <Route path='/return-sheet' element={<ReturnSheet />} />
             <Route path='/newOrder' element={<NewOrder />} />
             <Route path='/trucks' element={<Trucks />} />
             <Route path='/payroll' element={<Payroll />} />
