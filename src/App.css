@@ -508,6 +508,9 @@
   background-color: #202124;
   color: lightgray;
 }
+.wrapper-newOrder iframe {
+  display: none;
+}
 .wrapper-newOrder h1 {
   font-size:40px;
 }

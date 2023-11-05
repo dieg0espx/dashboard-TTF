@@ -25,11 +25,7 @@ function ReturnSheet() {
 
 
 
-function upperCase(str){
-    return str.toUpperCase();
-}
   
-
 
   return (
     <div className='wrapper-sheet'>
@@ -46,7 +42,7 @@ function upperCase(str){
       <div id="contact-info">
         <div id="firstRow">
             <h2> CUSTOMER NAME: </h2>
-            <p> {upperCase(elements.company)}</p>
+            <p> {elements.company}</p>
             <h2> DATE:</h2>
             <p> {elements.date}</p>
         </div>
