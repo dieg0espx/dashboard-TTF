@@ -368,7 +368,7 @@ function printSheet(url){
           <h2> Wood Beams </h2>
           <div className='field'>
             <p> 12'0" 4X6 WOOD BEAMS </p>
-            <input type='tel' placeholder='0' onChange={(e)=>setSh1(e.target.value)}/> 
+            <input type='tel' placeholder='0' onChange={(e)=>setWb12(e.target.value)}/> 
           </div>
           <div className='field'>
             <p> 11'0" 4X6 WOOD BEAMS </p>
