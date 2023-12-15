@@ -14,7 +14,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 90px;
+    height: 80px;
     font-size: 15px;
   }
   .wrapper-sheet #header img {
@@ -22,6 +22,7 @@
   }
   .wrapper-sheet #header p {
     text-align: right;
+    font-size: 13px;
   }
   .wrapper-sheet #firstRow {
     margin-top: 20px;
@@ -64,7 +65,7 @@
   .wrapper-sheet .content table, tr, td, th{
   border: 1px solid black;
   border-collapse: collapse;
-  height: 10px !important;
+  height: 8px !important;
 }
   .wrapper-sheet .content td {
     border: 1px solid black;
@@ -75,6 +76,7 @@
     text-align: left;
     padding-left: 5px;
     width: 265px;
+    font-size: 13px;
   }
 
 

@@ -103,13 +103,20 @@ function Order() {
                       <h4> Tel: </h4>
                       <p> {elements.tel}</p>
                     </div>
+                    <div className='row' onClick={() => showUpdatePopup("added", elements.added, 'added')}>
+                      <h4> Added via: </h4>
+                      <p> {elements.added}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("ret", elements.ret, 'ret')}>
+                      <h4> Returned via: </h4>
+                      <p> {elements.ret}</p>
+                    </div>
 
                     <h5> Frames </h5>
                     <div className='row' onClick={() => showUpdatePopup("6’h X 4’w Aluminum Frames", elements.af6x4, 'af6x4')}>
                       <h4> 6’h X 4’w Aluminum Frames: </h4>
                       <p> {elements.af6x4}</p>
                     </div>
-
                     <div className='row' onClick={() => showUpdatePopup("5’h X 4’w Aluminum Frames", elements.af5x4, 'af5x4')}>
                       <h4> 5’h X 4’w Aluminum Frames: </h4>
                       <p> {elements.af5x4}</p>
@@ -117,6 +124,10 @@ function Order() {
                     <div className='row' onClick={() => showUpdatePopup("4’h X 4’w Aluminum Frames", elements.af4x4, 'af4x4')}>
                       <h4> 4’h X 4’w Aluminum Frames: </h4>
                       <p> {elements.af4x4}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("2’h X 4’w Aluminum Frames", elements.af2x4, 'af2x4')}>
+                      <h4> 2’h X 4’w Aluminum Frames: </h4>
+                      <p> {elements.af2x4}</p>
                     </div>
                     <div className='row' onClick={() => showUpdatePopup("6’h X 4’w Steel Frames", elements.sf6x4, 'sf6x4')}>
                       <h4> 6’h X 4’w Steel Frames: </h4>
@@ -174,17 +185,57 @@ function Order() {
                       <h4> S.J Aluminum U/Heads: </h4>
                       <p> {elements.auh}</p>
                     </div>
+                    <div className='row' onClick={() => showUpdatePopup("S.J Aluminum U/Heads 40\"", elements.auh40, 'auh40')}>
+                      <h4> S.J Aluminum U/Heads 40": </h4>
+                      <p> {elements.auh40}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("Aluminum Regular Heads", elements.auhreg, 'auhreg')}>
+                      <h4> Aluminum Regular Heads: </h4>
+                      <p> {elements.auhreg}</p>
+                    </div>
                     <div className='row' onClick={() => showUpdatePopup("S.J Aluminum B/Plates", elements.abp, 'abp')}>
                       <h4> S.J Aluminum B/Plates: </h4>
                       <p> {elements.abp}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("S.J Aluminum B/Plates 40\"", elements.abp40, 'abp40')}>
+                      <h4> S.J Aluminum B/Plates 40": </h4>
+                      <p> {elements.abp40}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("Aluminum Regular Plates", elements.abp, 'abpreg')}>
+                      <h4> Aluminum Regular Plates: </h4>
+                      <p> {elements.abp40}</p>
                     </div>
                     <div className='row' onClick={() => showUpdatePopup("S.J Steel U/Heads", elements.suh, 'suh')}>
                       <h4> S.J Steel U/Heads: </h4>
                       <p> {elements.suh}</p>
                     </div>
+                    <div className='row' onClick={() => showUpdatePopup("S.J Steel U/Heads 36\"", elements.suh, 'suh36')}>
+                      <h4> S.J Steel U/Heads 36": </h4>
+                      <p> {elements.suh36}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("S.J Steel U/Heads 40\"", elements.suh, 'suh40')}>
+                      <h4> S.J Steel U/Heads 40": </h4>
+                      <p> {elements.suh40}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("Steel Regular Heads", elements.abp, 'suhreg')}>
+                      <h4> Steel Regular Heads: </h4>
+                      <p> {elements.suhreg}</p>
+                    </div>
                     <div className='row' onClick={() => showUpdatePopup("S.J Steel B/Plates", elements.sbp, 'sbp')}>
                       <h4>S.J Steel B/Plates: </h4>
                       <p> {elements.sbp}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("S.J Steel B/Plates 36\"", elements.sbp, 'sbp36')}>
+                      <h4>S.J Steel B/Plates 36": </h4>
+                      <p> {elements.sbp36}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("S.J Steel B/Plates 40\"", elements.sbp, 'sbp40')}>
+                      <h4>S.J Steel B/Plates 40": </h4>
+                      <p> {elements.sbp40}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("Steel Regular Plates", elements.sbp, 'sbpreg')}>
+                      <h4>Steel Regular Plates: </h4>
+                      <p> {elements.sbpreg}</p>
                     </div>
 
                     <h5> Pins & Clips </h5>
@@ -264,24 +315,52 @@ function Order() {
                     </div>
 
                     <h5> Post Shores </h5>
-                    <div className='row' onClick={() => showUpdatePopup("Post Shores No.1", elements.sh1, 'sh1')}>
-                      <h4> Post Shores No.1: </h4>
+                    <div className='row' onClick={() => showUpdatePopup("NO.O Shores 3' - 4'6\" (GREEN)", elements.sh03, 'sh0')}>
+                      <h4>No.O Shores 3' - 4'6" (GREEN) </h4>
+                      <p> {elements.sh03}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("NO. O SHORES 4' - 6'6\" (SILVER)", elements.sh04, 'sh04')}>
+                      <h4> NO. O SHORES 4' - 6'6" (SILVER): </h4>
+                      <p> {elements.sh04}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("NO. O SHORES 3'9 - 6' (GREEN)", elements.sh039, 'sh039')}>
+                      <h4> NO. O SHORES 3'9 - 6' (GREEN): </h4>
+                      <p> {elements.sh039}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("NO. 1 SHORES ", elements.sh1, 'sh1')}>
+                      <h4> "No. 1 SHORES: </h4>
                       <p> {elements.sh1}</p>
                     </div>
-                    <div className='row' onClick={() => showUpdatePopup("Post Shores No.2", elements.sh2, 'sh2')}>
-                      <h4> Post Shores No.2: </h4>
+                    <div className='row' onClick={() => showUpdatePopup("NO. 1 SHORES (BLUE) ", elements.sh1b, 'sh1b')}>
+                      <h4> NO. 1 SHORES (BLUE): </h4>
+                      <p> {elements.sh1b}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("NO. 2 SHORES ", elements.sh2, 'sh2')}>
+                      <h4> NO. 2 SHORES: </h4>
                       <p> {elements.sh2}</p>
                     </div>
-                    <div className='row' onClick={() => showUpdatePopup("Post Shores No.3", elements.sh3, 'sh3')}>
-                      <h4> Post Shores No.3: </h4>
+                    <div className='row' onClick={() => showUpdatePopup("NO. 3 SHORES ", elements.sh3, 'sh3')}>
+                      <h4> NO. 3 SHORES: </h4>
                       <p> {elements.sh3}</p>
                     </div>
-                    <div className='row' onClick={() => showUpdatePopup("Post Shores No.4", elements.sh4, 'sh4')}>
-                      <h4> Post Shores No.4: </h4>
+                    <div className='row' onClick={() => showUpdatePopup("NO. 3 SHORES (BLUE) ", elements.sh3, 'sh3b')}>
+                      <h4> NO. 3 SHORES (BLUE): </h4>
+                      <p> {elements.sh3b}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("NO. 4 SHORES ", elements.sh4, 'sh4')}>
+                      <h4> NO. 4 SHORES: </h4>
                       <p> {elements.sh4}</p>
+                    </div>
+                    <div className='row' onClick={() => showUpdatePopup("NO. 4 SHORES (BLUE) ", elements.sh4, 'sh4b')}>
+                      <h4> NO. 4 SHORES (BLUE): </h4>
+                      <p> {elements.sh4b}</p>
                     </div>
 
                     <h5> Wood Beams </h5>
+                    <div className='row' onClick={() => showUpdatePopup("14\" 4x6 Wood Beams", elements.wb14, 'wb14')}>
+                      <h4> 14" 4x6 Wood Beams: </h4>
+                      <p> {elements.wb14}</p>
+                    </div>
                     <div className='row' onClick={() => showUpdatePopup("12\" 4x6 Wood Beams", elements.wb12, 'wb12')}>
                       <h4> 12" 4x6 Wood Beams: </h4>
                       <p> {elements.wb12}</p>
@@ -320,26 +399,31 @@ function Order() {
                     </div>
 
                     <h5> Others</h5>
-                    <div className='row' onClick={() => showUpdatePopup(elements.extraA, elements.extra1, 'extra1')}>
-                      <h4> {elements.extraA} </h4>
-                      <p> {elements.extra1}</p>
+                    <div className='row' onClick={() => showUpdatePopup("Steel Cage 4x4x4x", elements.sc4x4x4, 'sc4x4x4')}>
+                      <h4> Steel Cage 4x4x4: </h4>
+                      <p> {elements.sc4x4x4}</p>
                     </div>
-                    <div className='row' onClick={() => showUpdatePopup(elements.extraB, elements.extra2, 'extra2')}>
-                      <h4> {elements.extraB} </h4>
-                      <p> {elements.extra2}</p>
+                    <div className='row'>
+                      <h4 onClick={() => showUpdatePopup(elements.extraA, elements.extraA, 'extraA')}> {elements.extraA} </h4>
+                      <p onClick={() => showUpdatePopup(elements.extraA, elements.extra1, 'extra1')}> {elements.extra1}</p>
                     </div>
-                    <div className='row' onClick={() => showUpdatePopup(elements.extraC, elements.extra3, 'extra3')}>
-                      <h4> {elements.extraC} </h4>
-                      <p> {elements.extra3}</p>
+                    <div className='row'>
+                      <h4 onClick={() => showUpdatePopup(elements.extraB, elements.extraB, 'extraB')}> {elements.extraB} </h4>
+                      <p onClick={() => showUpdatePopup(elements.extraB, elements.extra2, 'extra2')}> {elements.extra2}</p>
                     </div>
-                    <div className='row' onClick={() => showUpdatePopup(elements.extraD, elements.extra4, 'extra4')}>
-                      <h4> {elements.extraD} </h4>
-                      <p> {elements.extra4}</p>
+                    <div className='row'>
+                      <h4 onClick={() => showUpdatePopup(elements.extraC, elements.extraC, 'extraC')}> {elements.extraC} </h4>
+                      <p onClick={() => showUpdatePopup(elements.extraC, elements.extra3, 'extra3')}> {elements.extra3}</p>
                     </div>
-                    <div className='row' onClick={() => showUpdatePopup(elements.extraE, elements.extra5, 'extra5')}>
-                      <h4> {elements.extraE} </h4>
-                      <p> {elements.extra5}</p>
+                    <div className='row'>
+                      <h4 onClick={() => showUpdatePopup(elements.extraD, elements.extraD, 'extraD')}> {elements.extraD} </h4>
+                      <p onClick={() => showUpdatePopup(elements.extraD, elements.extra4, 'extra4')}> {elements.extra4}</p>
                     </div>
+                    <div className='row'>
+                      <h4 onClick={() => showUpdatePopup(elements.extraE, elements.extraE, 'extraE')}> {elements.extraE} </h4>
+                      <p onClick={() => showUpdatePopup(elements.extraE, elements.extra5, 'extra5')}> {elements.extra5}</p>
+                    </div>              
+                   
                 </div>
             ))}
         </div>

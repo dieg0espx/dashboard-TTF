@@ -90,6 +90,29 @@ function NewOrder() {
 
     const [drawings, setDrawings] = useState(false)
 
+
+    const [added, setAdded] = useState('')
+    const [ret, setRet] = useState('')
+    const [af2x4, setAf2x4] = useState(0)
+    const [auh40, setAuh40] = useState(0)
+    const [auhreg, setAuhreg] = useState(0)
+    const [abp40, setAbp40] = useState(0)
+    const [abpreg, setAbpreg] = useState(0)
+    const [suh36, setSuh36] = useState(0)
+    const [suh40, setSuh40] = useState(0)
+    const [suhreg, setSuhreg] = useState(0)
+    const [sbp36, setSbp36] = useState(0)
+    const [sbp40, setSbp40] = useState(0)
+    const [sbpreg, setSbpreg] = useState(0)
+    const [sh03, setSh03] = useState(0)
+    const [sh04, setSh04] = useState(0)
+    const [sh039, setSh039] = useState(0)
+    const [sh1b, setSh1b] = useState(0)
+    const [sh3b, setSh3b] = useState(0)
+    const [sh4b, setSh4b] = useState(0)
+    const [wb14, setWb14] = useState(0)
+    const [sc4x4x4, setSc4x4x4] = useState(0)
+
     const [orderStatus, setOrderStatus] = useState(false)
     const [urlToPrint, setUrlToPrint] = useState('')
 
@@ -109,7 +132,7 @@ function NewOrder() {
   },[orderStatus])
 
   function saveNewOrder(){
-    const data = {company, jobsite, contact, tel, date, af6x4, af5x4, af4x4, sf6x4, sf5x4, sf4x4, sf3x4, cb10x4, cb10x2, cb7x4, cb7x2, cb5x4, cb5x2, cb4x4, cb4x2, afc, sfc, bc, auh, abp, suh, sbp, ab20, ab18, ab16, ab14, ab13, ab12, ab11, ab106, ab10, ab9, ab8, ab7, ab6, ab5, ab4, sh1, sh2, sh3, sh4, wb12, wb11, wb10, wb9, wb8, wb7, wb6, wb5, wb4, extraA, extraB, extraC, extraD, extraE, extra1, extra2, extra3, extra4, extra5, drawings: drawings?"true":"false", done:''};
+    const data = {company, jobsite, contact, tel, date, af6x4, af5x4, af4x4, sf6x4, sf5x4, sf4x4, sf3x4, cb10x4, cb10x2, cb7x4, cb7x2, cb5x4, cb5x2, cb4x4, cb4x2, afc, sfc, bc, auh, abp, suh, sbp, ab20, ab18, ab16, ab14, ab13, ab12, ab11, ab106, ab10, ab9, ab8, ab7, ab6, ab5, ab4, sh1, sh2, sh3, sh4, wb12, wb11, wb10, wb9, wb8, wb7, wb6, wb5, wb4, extraA, extraB, extraC, extraD, extraE, extra1, extra2, extra3, extra4, extra5, drawings: drawings?"true":"false", done:'', af2x4, auh40, auhreg, abp40, abpreg, suh36, suh40, suhreg, sbp36, sbp40, sbpreg, sh03, sh04, sh039, sh1b, sh3b, sh4b, wb14, sc4x4x4, added, ret};
     const jsonString = JSON.stringify(data);
     fetch( apiURL + '/newOrder.php?data=' + jsonString)
     .then(response => response.json())
@@ -133,7 +156,7 @@ function openNewJobsite(){
 }
 
 function printReturnSheet(){
-  const data = {company, jobsite, contact, tel, date, af6x4, af5x4, af4x4, sf6x4, sf5x4, sf4x4, sf3x4, cb10x4, cb10x2, cb7x4, cb7x2, cb5x4, cb5x2, cb4x4, cb4x2, afc, sfc, bc, auh, abp, suh, sbp, ab20, ab18, ab16, ab14, ab13, ab12, ab11, ab106, ab10, ab9, ab8, ab7, ab6, ab5, ab4, sh1, sh2, sh3, sh4, wb12, wb11, wb10, wb9, wb8, wb7, wb6, wb5, wb4, extraA, extraB, extraC, extraD, extraE, extra1, extra2, extra3, extra4, extra5, drawings: drawings?"true":"false", done:''};
+  const data = {company, jobsite, contact, tel, date, af6x4, af5x4, af4x4, sf6x4, sf5x4, sf4x4, sf3x4, cb10x4, cb10x2, cb7x4, cb7x2, cb5x4, cb5x2, cb4x4, cb4x2, afc, sfc, bc, auh, abp, suh, sbp, ab20, ab18, ab16, ab14, ab13, ab12, ab11, ab106, ab10, ab9, ab8, ab7, ab6, ab5, ab4, sh1, sh2, sh3, sh4, wb12, wb11, wb10, wb9, wb8, wb7, wb6, wb5, wb4, extraA, extraB, extraC, extraD, extraE, extra1, extra2, extra3, extra4, extra5, drawings: drawings?"true":"false", done:'', af2x4, auh40, auhreg, abp40, abpreg, suh36, suh40, suhreg, sbp36, sbp40, sbpreg, sh03, sh04, sh039, sh1b, sh3b, sh4b, wb14, sc4x4x4, added, ret};
   const jsonString = JSON.stringify(data);
   setUrlToPrint('../#/return-sheet?data=' + jsonString)
   printSheet('../#/return-sheet?data=' + jsonString)
@@ -180,6 +203,14 @@ function printSheet(url){
             <input className='upperCase' type='text' onChange={(e)=>setContact(e.target.value)} value={contact} placeholder='Contact'/> 
           </div>
           <div className='field'>
+            <p> Added Via </p>
+            <input className='upperCase' type='text' onChange={(e)=>setAdded(e.target.value)} value={added} placeholder='Added Via'/> 
+          </div>
+          <div className='field'>
+            <p> Returned Via </p>
+            <input className='upperCase' type='text' onChange={(e)=>setRet(e.target.value)} value={ret} placeholder='Returned Via'/> 
+          </div>
+          <div className='field'>
             <p> Tel </p>
             <input className='upperCase' type='tel'  onChange={(e)=>setTel(e.target.value)} value={tel} placeholder='Phone Number'/> 
           </div>
@@ -200,6 +231,10 @@ function printSheet(url){
           <div className='field'>
             <p> 4’H X 4’W ALUM H.D. FRAMES </p>
             <input type='tel' placeholder='0' onChange={(e)=>setAf4x4(e.target.value)} /> 
+          </div>
+          <div className='field'>
+            <p> 2’H X 4’W ALUM H.D. FRAMES </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setAf2x4(e.target.value)} /> 
           </div>
           <div className='field'>
             <p> 6’H X 4’W STEEL H.D. FRAMES </p>
@@ -258,17 +293,59 @@ function printSheet(url){
             <input type='tel' placeholder='0' onChange={(e)=>setAuh(e.target.value)}/> 
           </div>
           <div className='field'>
+            <p>	ALUM H.D S.J U/HEAD 40"	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setAuh40(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p>	ALUMINUM REGULAR HEADS	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setAuhreg(e.target.value)}/> 
+          </div>
+          <div className='field'>
             <p>	ALUM H.D S.J B/PLATE	 </p>
             <input type='tel' placeholder='0' onChange={(e)=>setAbp(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p>	ALUM H.D S.J B/PLATE 40"	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setAbp40(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p>	ALUMINUM REGULAR PLATES	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setAbpreg(e.target.value)}/> 
           </div>
           <div className='field'>
             <p>	STEEL H.D S.J U/HEAD	 </p>
             <input type='tel' placeholder='0' onChange={(e)=>setSuh(e.target.value)}/> 
           </div>
           <div className='field'>
+            <p>	STEEL H.D S.J U/HEAD 36"	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSuh36(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p>	STEEL H.D S.J U/HEAD 40"	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSuh40(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p>	STEEL REGULAR PLATES	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSbpreg(e.target.value)}/> 
+          </div>
+          <div className='field'>
             <p>	STEEL H.D S.J B/PLATE	 </p>
             <input type='tel' placeholder='0' onChange={(e)=>setSbp(e.target.value)}/> 
           </div>
+          <div className='field'>
+            <p>	STEEL H.D S.J B/PLATE	36" </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSbp36(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p>	STEEL H.D S.J B/PLATE	40" </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSbp40(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p>	STEEL REGULAR PLATES </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSbpreg(e.target.value)}/> 
+          </div>
+
+
 
           <h2> Pins & Clips </h2>
           <div className='field'>
@@ -349,23 +426,51 @@ function printSheet(url){
  
           <h2> Post Shores </h2>
           <div className='field'>
-            <p> No.1 Shore	 </p>
+            <p> NO. O SHORES 3' - 4'6" (GREEN) </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSh03(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p> NO. O SHORES 4' - 6'6" (SILVER)	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSh04(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p> NO. O SHORES 3'9" - 6' (GREEN)	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSh039(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p> NO. 1 SHORES	 </p>
             <input type='tel' placeholder='0' onChange={(e)=>setSh1(e.target.value)}/> 
           </div>
           <div className='field'>
-            <p> No.2 Shore	 </p>
+            <p> NO. 1 SHORES (BLUE)	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSh1b(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p> NO. 2 SHORES	 </p>
             <input type='tel' placeholder='0' onChange={(e)=>setSh2(e.target.value)}/> 
           </div>
           <div className='field'>
-            <p> No.3 Shore	 </p>
+            <p> NO. 3 SHORES	 </p>
             <input type='tel' placeholder='0' onChange={(e)=>setSh3(e.target.value)}/> 
           </div>
           <div className='field'>
-            <p> No.4 Shore	 </p>
+            <p> NO. 3 SHORES (BLUE)	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSh3b(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p> NO. 4 SHORES	 </p>
             <input type='tel' placeholder='0' onChange={(e)=>setSh4(e.target.value)}/> 
+          </div>
+          <div className='field'>
+            <p> NO. 4 SHORES (BLUE)	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSh4b(e.target.value)}/> 
           </div>
 
           <h2> Wood Beams </h2>
+          <div className='field'>
+            <p> 14'0" 4X6 WOOD BEAMS </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setWb14(e.target.value)}/> 
+          </div>
           <div className='field'>
             <p> 12'0" 4X6 WOOD BEAMS </p>
             <input type='tel' placeholder='0' onChange={(e)=>setWb12(e.target.value)}/> 
@@ -404,6 +509,10 @@ function printSheet(url){
           </div>
 
           <h2> Others </h2>
+          <div className='field'>
+            <p> 4x4x4 STEEL CAGE </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSc4x4x4(e.target.value)}/> 
+          </div>
           <div className='field'>
             <input className='extras' type='text' placeholder='Extra A' onChange={(e)=>setExtraA(e.target.value)}/>
             <input type='tel' placeholder='0' onChange={(e)=>setExtra1(e.target.value)}/> 
