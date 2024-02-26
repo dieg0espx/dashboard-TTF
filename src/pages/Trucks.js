@@ -24,7 +24,7 @@ function Trucks() {
       .then(response => {
           console.log(response);
           const sortedTrucks = response.sort((a, b) => new Date(b.date) - new Date(a.date));
-          setTrucks(sortedTrucks);
+          setTrucks(response);
       })
       .catch(error => {
           console.error('Error:', error);
@@ -53,6 +53,7 @@ function Trucks() {
   function openImage(url){
     setShowPopup(true)
     setSelectedImage(url)
+    console.log(url);
   }
 
 

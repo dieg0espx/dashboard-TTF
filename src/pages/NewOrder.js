@@ -325,8 +325,8 @@ function printSheet(url){
             <input type='tel' placeholder='0' onChange={(e)=>setSuh40(e.target.value)}/> 
           </div>
           <div className='field'>
-            <p>	STEEL REGULAR PLATES	 </p>
-            <input type='tel' placeholder='0' onChange={(e)=>setSbpreg(e.target.value)}/> 
+            <p>	STEEL REGULAR HEADS	 </p>
+            <input type='tel' placeholder='0' onChange={(e)=>setSuhreg(e.target.value)}/> 
           </div>
           <div className='field'>
             <p>	STEEL H.D S.J B/PLATE	 </p>
