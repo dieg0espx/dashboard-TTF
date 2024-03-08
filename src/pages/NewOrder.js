@@ -131,14 +131,18 @@ function NewOrder() {
     console.log(orderStatus);
   },[orderStatus])
 
-  function saveNewOrder(){
+  async function saveNewOrder(){
     const data = {company, jobsite, contact, tel, date, af6x4, af5x4, af4x4, sf6x4, sf5x4, sf4x4, sf3x4, cb10x4, cb10x2, cb7x4, cb7x2, cb5x4, cb5x2, cb4x4, cb4x2, afc, sfc, bc, auh, abp, suh, sbp, ab20, ab18, ab16, ab14, ab13, ab12, ab11, ab106, ab10, ab9, ab8, ab7, ab6, ab5, ab4, sh1, sh2, sh3, sh4, wb12, wb11, wb10, wb9, wb8, wb7, wb6, wb5, wb4, extraA, extraB, extraC, extraD, extraE, extra1, extra2, extra3, extra4, extra5, drawings: drawings?"true":"false", done:'', af2x4, auh40, auhreg, abp40, abpreg, suh36, suh40, suhreg, sbp36, sbp40, sbpreg, sh03, sh04, sh039, sh1b, sh3b, sh4b, wb14, sc4x4x4, added, ret};
     const jsonString = JSON.stringify(data);
-    fetch( apiURL + '/newOrder.php?data=' + jsonString)
-    .then(response => response.json())
-    .then(response => console.log(response))
-    alert("New Order added successfully !")
-    window.location.href = '/#/orders';
+    const response =  await fetch( apiURL + '/newOrder.php?data=' + jsonString)
+    if(response.status  == 200){
+      alert("New Order added successfully !")
+      window.location.href = '/#/orders';
+    } else {
+      alert("Error submitting new order :( ")
+    }
+
+
 }
 
 function autoCompleteSelected(company, jobsite, contact, tel) {
