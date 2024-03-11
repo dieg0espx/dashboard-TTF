@@ -17,17 +17,21 @@ function PrintPayroll() {
         setPayroll(JSON.parse(paramValue))
         setFrom(searchParams.get('from'))
         setTo(searchParams.get('to'))
+        printDocument()
     },[])
 
     function printDocument(){
-        window.print()
+        function delayedFunction() { 
+            window.print()
+        }
+          setTimeout(delayedFunction, 1000);
     }
 
 
   return (
     <div className='wrapper-printPayroll'>
         <div className='header'>
-            <img src={logo} onLoad={()=>printDocument()}/>
+            <img src={logo}/>
             <div>
                 <p> 10979 Olsen Road        </p>
                 <p> Surrey, BC              </p>

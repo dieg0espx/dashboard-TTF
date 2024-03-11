@@ -139,6 +139,7 @@ function Payroll() {
     }
 
     function generatePayroll(){
+      console.log("GENERATING PAYROLL ... ");
       setPayroll([])
       if(rangeDates.length < 1 || selectedEmployeeCodes <=0){
         alert("Please select Dates and Employees");
@@ -157,18 +158,15 @@ function Payroll() {
                   const regHoursDouble = parseFloat(hours[i].regHours);
                   const otHoursDouble = parseFloat(hours[i].otHours);
                   reg = reg + regHoursDouble
-                  if(employees[e].contracted ==1){
-                    ot = ot + (otHoursDouble * 1.5)
-                  } else {
-                    ot = ot + otHoursDouble
-                  }
+                  ot = ot + otHoursDouble
                 }
-                tot = reg + ot
+                employees[e].contracted == 1 ? tot = reg + (ot * 1.5) : tot = reg + ot
               }
             }
             payroll.push({code: code, name: name, reg: reg.toFixed(2), ot:ot.toFixed(2), tot:tot.toFixed(2)})
           }
         } 
+        console.log(payroll);
         printPayroll( "#/printPayroll/?data=" + JSON.stringify(payroll) + "&&from=" +  from + "&&to=" + to) 
       }
     }
@@ -360,8 +358,6 @@ function Payroll() {
             </div>
 
             <button onClick={()=>saveNewHours(id)}> Update</button>
-
-
       </div>
     </div>
   )
