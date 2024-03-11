@@ -915,6 +915,7 @@
 .wrapper-payroll .popup .hours {
   display: grid;
   grid-template-columns: auto auto;
+  height: 9cqb;
 }
 .wrapper-payroll .popup .hours p{
   display: flex;

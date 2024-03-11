@@ -26,8 +26,6 @@ function PrintPayroll() {
         }
           setTimeout(delayedFunction, 1000);
     }
-
-
   return (
     <div className='wrapper-printPayroll'>
         <div className='header'>

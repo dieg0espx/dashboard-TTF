@@ -88,17 +88,17 @@ function Payroll() {
     }
 
     async function saveNewHours(){
-        fetch(`http://localhost:3002/api/updateHours/${id}`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ id, signIn, signOut, regHours, otHours }),
-          })
-          .then(response => response.json())
-          .then(response =>  console.log(response))
-          setShowPopUp(false)
-          getHours()
+      let data = {id, signIn, signOut, regHours, otHours}
+      const jsonString = JSON.stringify(data);
+      const response =  await fetch( apiURL + '/updateHours.php?data=' + jsonString)
+      if(response.status  == 200){
+        alert("Hours updated successfully !")
+        window.location.href = '/#/payroll';
+      } else {
+        alert("Error Updating hours :( ")
+      }
+      setShowPopUp(false)
+      getHours()
     }
 
     function calculateHours(startTime, endTime) {
@@ -356,7 +356,6 @@ function Payroll() {
                 <p><b> Reg Hours: </b> {parseFloat(regHours).toFixed(2)} </p>
                 <p><b> O.T Hours: </b> {parseFloat(otHours).toFixed(2)} </p>
             </div>
-
             <button onClick={()=>saveNewHours(id)}> Update</button>
       </div>
     </div>
