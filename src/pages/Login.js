@@ -5,18 +5,23 @@ import Switch from "react-switch";
 
 
 function Login(props) {
-    const [username, setUsername] = useState(Cookies.get('access'))
+    const [username, setUsername] = useState(localStorage.getItem('username'))
     const [password, setPassword] = useState('')
     const [remmember, setRemmember] = useState(false)
 
     const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
 
-useEffect(()=>{
-    if(Cookies.get('username')){
-        setRemmember(true)
-        setUsername(Cookies.get('username'))
-    }
-},[])
+    useEffect(()=>{
+        if(Cookies.get('username')){
+            setRemmember(true)
+            setUsername(Cookies.get('username'))
+        }
+        if(localStorage.getItem('remmember') == 'true'){
+            setRemmember(true)
+        } else {
+            setRemmember(false)
+        }
+    },[])
 
     async function checkUser(){
         const data = {username, password};
@@ -38,7 +43,23 @@ useEffect(()=>{
             }
             console.log(response);
         })
+
+        storeSwitch()
     }
+
+    function storeSwitch(){
+        if(remmember){
+            localStorage.setItem('remmember', true)
+            localStorage.setItem('username', username)
+        } else {
+            localStorage.setItem('remmember', false)
+            localStorage.setItem('username', '')
+        }
+    }
+
+    useEffect(()=>{
+        console.log("Remmember: " + remmember);
+    },[remmember])
 
   return (
     <div className='wrapper-login'>
