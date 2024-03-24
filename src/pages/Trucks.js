@@ -11,6 +11,9 @@ function Trucks() {
   const [selectedImage, setSelectedImage] = useState('')
   const [isMobile, setIsMobile] = useState(false)
 
+  const [showUpdatePopup, setShowUpdatePopup] = useState(false)
+  const [updatedTruck, setUpdatedTruck] = useState({company: '', location: '', status:'', date: '', time:'', id: ''})
+
   const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
 
     useEffect(()=>{
@@ -18,11 +21,12 @@ function Trucks() {
         window.innerWidth < 600 ? setIsMobile(true):setIsMobile(false)
     },[])
 
-    function getTrucks() {
+
+  function getTrucks() {
       fetch( apiURL + '/getTrucks.php')
       .then(response => response.json())
       .then(response => {
-          console.log(response);
+          // console.log(response);
           const sortedTrucks = response.sort((a, b) => new Date(b.date) - new Date(a.date));
           setTrucks(response);
       })
@@ -43,10 +47,11 @@ function Trucks() {
      const formattedDate = dateObj.toLocaleDateString('en-US', options);
 
      return formattedDate
- }
+  }
 
   function showTruck(id, company, location, date, time, status){
       setSelectedTruck({id, company, location, date, time, status})
+      setUpdatedTruck({id, company, location, date, time, status})
       setShowSidebar(true)
   }
 
@@ -54,6 +59,34 @@ function Trucks() {
     setShowPopup(true)
     setSelectedImage(url)
     console.log(url);
+  }
+
+  function hidePopups(){
+    setShowPopup(false)
+    setShowUpdatePopup(false)
+  }
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    // Update the state with new value for the specific property
+    setUpdatedTruck({
+      ...updatedTruck,
+      [name]: value
+    });
+  };
+  
+  async function updateTruck(){
+    const jsonString = JSON.stringify(updatedTruck);
+    const response =  await fetch( apiURL + '/updateTruck.php?data=' + jsonString)
+    if(response.status  == 200){
+      alert("Truck Updated successfully !")
+      getTrucks()
+      setSelectedTruck(updatedTruck)
+      setShowUpdatePopup(false)
+    } else {
+      alert("Error Updating Truck :( ")
+    }
+
   }
 
 
@@ -87,9 +120,11 @@ function Trucks() {
           <div className="sideBar" style={{ display: showSidebar ? "block" : "none" }}>
             {selectedTruck.company ? (
               <>
-                <p id="company">
-                  <b>{selectedTruck.company}</b>
-                </p>
+                <div className='two-col'>
+                  <p id="company"><b>{selectedTruck.company}</b></p>  
+                  <i className="bi bi-pencil-square iconEdit" onClick={()=>setShowUpdatePopup(!showUpdatePopup)}></i>
+                </div>
+                
                 <p id="status"><i className= {selectedTruck.status == 'Return' ? "bi bi-circle-fill returnBullet":"bi bi-circle-fill shippingBullet"}></i> {selectedTruck.status}</p>
                 <p>{selectedTruck.location}</p>
                 <p>{formatDate(selectedTruck.date)}</p>
@@ -166,17 +201,27 @@ function Trucks() {
               <p className='emptyArray'>Nothing Selected</p>
             )}
           </div>
-          <div
-            className='overlay'
-            style={{ display: showPopup ? "block" : "none" }}
-            onClick={() => setShowPopup(false)}
-          />
+          <div className='overlay' style={{ display: showPopup || showUpdatePopup ? "block" : "none" }} onClick={() => hidePopups()}/>
           <div className='image-popup' style={{ display: showPopup ? "block" : "none" }}>
             <iframe src={selectedImage} title="Selected Image" />
           </div>
+          <div className='update-popup' style={{display: showUpdatePopup? "flex":"none"}}>
+            <h2> Update Truck </h2>
+            <div className='form'>
+              <input className="field" type='text' value={updatedTruck.company} name='company' onChange={handleInputChange} placeholder='Company Name'/>
+              <input className="field" type='text' value={updatedTruck.location} name='location' onChange={handleInputChange} placeholder='Jobsite Address' />
+              <select className='field' value={updatedTruck.status} name='status' onChange={handleInputChange}>
+                <option value={'shipping'}> Shipping </option>
+                <option value={'Return'}> Return </option>
+              </select>
+              <input className="field" type='date' value={updatedTruck.date} name='date' onChange={handleInputChange}/>
+              <input className="field" type='time' value={updatedTruck.time} name='time' onChange={handleInputChange}/>
+              <button onClick={()=> updateTruck()}> Update </button>
+            </div>
+          </div>
         </div>
       </div>
-      </div>
+    </div>
   )
 }
 
