@@ -32,6 +32,8 @@ function Payroll() {
     const [filterCode, setFilterCode] = useState('')
     const [isMobile, setIsMobile] = useState(false)
 
+    const [weekends, setWeekends] = useState([])
+
     const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
 
     useEffect(()=>{
@@ -134,8 +136,8 @@ function Payroll() {
         const currentDate = addDays(startDate, i);
         datesInRange.push(formatDate(currentDate));
       }
-      console.log(datesInRange);
       setRangeDates(datesInRange)
+      getWeekendOvertime(datesInRange)
     }
 
     function generatePayroll(){
@@ -155,10 +157,20 @@ function Payroll() {
             for (let i = 0; i < hours.length; i++) {
               if (rangeDates.includes(formatDate(hours[i].date))) {
                 if (hours[i].code === employees[e].code) {
-                  const regHoursDouble = parseFloat(hours[i].regHours);
-                  const otHoursDouble = parseFloat(hours[i].otHours);
-                  reg = reg + regHoursDouble
-                  ot = ot + otHoursDouble
+                  // COUNTING WEEKENDS AS OT HOURS
+                  if(weekends.includes(hours[i].date) && employees[e].contracted == 1){
+                    const regHoursDouble = parseFloat(hours[i].regHours);
+                    const otHoursDouble = parseFloat(hours[i].otHours);
+                    ot = ot + regHoursDouble
+                    ot = ot + otHoursDouble
+                  } 
+                  // COUNTING REGULAR AND OT HOURS
+                    else {
+                    const regHoursDouble = parseFloat(hours[i].regHours);
+                    const otHoursDouble = parseFloat(hours[i].otHours);
+                    reg = reg + regHoursDouble
+                    ot = ot + otHoursDouble
+                  }
                 }
                 employees[e].contracted == 1 ? tot = reg + (ot * 1.5) : tot = reg + ot
               }
@@ -169,6 +181,27 @@ function Payroll() {
         console.log(payroll);
         printPayroll( "#/printPayroll/?data=" + JSON.stringify(payroll) + "&&from=" +  from + "&&to=" + to) 
       }
+    }
+
+    function isWeekend(dateStr) {
+      let date = new Date(dateStr)
+      const dayOfWeek = date.getDay();
+      return dayOfWeek === 0 || dayOfWeek === 1; // Sunday = 0, Saturday = 6
+    }
+    function getWeekendOvertime(datesInRange){
+      function formatDateyyyymmdd(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+      }      
+      let weekendDays = []
+      for(let i = 0; i < datesInRange.length; i ++) {
+        if(isWeekend(datesInRange[i])){
+          weekendDays.push(formatDateyyyymmdd(new Date(datesInRange[i])))
+        } 
+      }
+      setWeekends(weekendDays)
     }
 
     const iframeRef = useRef(null);

@@ -39,18 +39,22 @@ function FormNewJobsite(props) {
         setRandomNumber(newCode)
     }
 
-    function saveNewJobsite(){
+    async function saveNewJobsite(){
         const data = {code:randomNumber, company, jobsite, contact, tel};
         const jsonString = JSON.stringify(data);
-        fetch( apiURL + '/newJobsite.php?data=' + jsonString)
-        .then(response => response.json())
-        .then(response => console.log(response))
+        let response = await fetch( apiURL + '/newJobsite.php?data=' + jsonString)
+        console.log(response);
+        if(response.status == 200){
+          alert("New Jobsite added successfully !")
+        } else {
+          alert("Error Creating New Jobsite :( ")
+        }
 
         setCompany('')
         setJobsite('')
         setContact('')
         setTel('')
-        alert("New Jobsite added successfully !")
+        
         window.location.reload();
     }
 
