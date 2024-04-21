@@ -10,6 +10,12 @@ function Trucks() {
   const [showPopup, setShowPopup] = useState(false)
   const [selectedImage, setSelectedImage] = useState('')
   const [isMobile, setIsMobile] = useState(false)
+  const [zoomImage1, setZoomImage1] = useState(false)
+  const [zoomImage2, setZoomImage2] = useState(false)
+  const [zoomImage3, setZoomImage3] = useState(false)
+  const [zoomImage4, setZoomImage4] = useState(false)
+  const [zoomImage5, setZoomImage5] = useState(false)
+  const [zoomImage6, setZoomImage6] = useState(false)
 
   const [showUpdatePopup, setShowUpdatePopup] = useState(false)
   const [updatedTruck, setUpdatedTruck] = useState({company: '', location: '', status:'', date: '', time:'', id: ''})
@@ -18,21 +24,49 @@ function Trucks() {
 
     useEffect(()=>{
         getTrucks()
+        getNewTrucks()
         window.innerWidth < 600 ? setIsMobile(true):setIsMobile(false)
     },[])
 
 
-  function getTrucks() {
-      fetch( apiURL + '/getTrucks.php')
+  async function getTrucks() {
+      let trucks = []
+      let newTrucks = []
+      let allTrucks = []
+
+      await fetch( apiURL + '/getTrucks.php')
       .then(response => response.json())
       .then(response => {
           // console.log(response);
           const sortedTrucks = response.sort((a, b) => new Date(b.date) - new Date(a.date));
-          setTrucks(response);
+          trucks = sortedTrucks
       })
       .catch(error => {
           console.error('Error:', error);
       });
+
+      await fetch('https://api.ttfconstruction.com/getAllTrucks.php')
+      .then(response => response.json())
+      .then(response => {
+        // console.log(response);
+        const sortedTrucks = response.sort((a, b) => new Date(b.date) - new Date(a.date));
+        newTrucks = sortedTrucks
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+    // console.log("===== ALL TRUCKS =====");
+    // console.log(trucks);
+    // console.log(newTrucks);
+    allTrucks = trucks.concat(newTrucks)
+    let sortedTrucks = allTrucks.sort((a, b) => new Date(b.date) - new Date(a.date));
+    // console.log(sortedTrucks);
+    setTrucks(sortedTrucks)
+  }
+  
+  async function getNewTrucks(){
+
   }
 
   function formatDate(date){
@@ -49,21 +83,28 @@ function Trucks() {
      return formattedDate
   }
 
-  function showTruck(id, company, location, date, time, status){
-      setSelectedTruck({id, company, location, date, time, status})
-      setUpdatedTruck({id, company, location, date, time, status})
+  function showTruck(id, company, location, date, time, status, image1, image2, image3, iumage4, image5, image6, imageOrigin){
+      let truck = {id, company, location, date, time, status, image1, image2, image3, iumage4, image5, image6, imageOrigin}
+      setSelectedTruck(truck)
+      setUpdatedTruck(truck)
       setShowSidebar(true)
   }
 
   function openImage(url){
     setShowPopup(true)
     setSelectedImage(url)
-    console.log(url);
   }
+
 
   function hidePopups(){
     setShowPopup(false)
     setShowUpdatePopup(false)
+    setZoomImage1(false)
+    setZoomImage2(false)
+    setZoomImage3(false)
+    setZoomImage4(false)
+    setZoomImage5(false)
+    setZoomImage6(false)
   }
 
   const handleInputChange = (event) => {
@@ -75,9 +116,16 @@ function Trucks() {
     });
   };
   
-  async function updateTruck(){
+  async function updateTruck(imageOrigin){
     const jsonString = JSON.stringify(updatedTruck);
-    const response =  await fetch( apiURL + '/updateTruck.php?data=' + jsonString)
+    let response;
+    console.log(imageOrigin);
+    if(imageOrigin == "Cloudinary"){
+      response =  await fetch( apiURL + '/updateTruck2.php?data=' + jsonString)   
+    } else {
+      response =  await fetch( apiURL + '/updateTruck.php?data=' + jsonString)
+    }
+    console.log(response);
     if(response.status  == 200){
       alert("Truck Updated successfully !")
       getTrucks()
@@ -92,6 +140,7 @@ function Trucks() {
 
 
   return (
+    
     <div className='wrapper-trucksPage'>
       <div>
         <Sidebar />
@@ -108,7 +157,7 @@ function Trucks() {
         <div className="main-grid" style={{display: showSidebar ? "grid":"block"}}>
           <div className='trucks'>
             {trucks.map((truck) => (
-              <div className={showSidebar? "shortRow":"row"} onClick={()=>showTruck(truck.id, truck.company, truck.location, truck.date, truck.time, truck.status)}>
+              <div className={showSidebar? "shortRow":"row"} onClick={()=>showTruck(truck.id, truck.company, truck.location, truck.date, truck.time, truck.status, truck.image1,truck.image2, truck.image3,truck.image4,truck.image5,truck.image6,truck.imageOrigin)}>
                 <p id="company"> <i className= {truck.status == 'Return' ? "bi bi-circle-fill returnBullet":"bi bi-circle-fill shippingBullet"}></i> {truck.company} </p>
                 <p> {truck.location} </p>
                 <p> {formatDate(truck.date)} </p>
@@ -130,83 +179,102 @@ function Trucks() {
                 <p>{formatDate(selectedTruck.date)}</p>
                 <p>{selectedTruck.time}</p>
                 <br />
-                <iframe
-                  src={apiURL+'/getImage1.php?id=' + selectedTruck.id}
-                  onClick={() => console.log('a')}
-                  title="Image 1"
-                />
-                <div
-                  className='imageOpener'
-                  onClick={() =>
-                    openImage(apiURL + '/getImage1.php?id=' + selectedTruck.id)
-                  }
-                />
-                <iframe
-                  src={apiURL + '/getImage2.php?id=' + selectedTruck.id}
-                  onClick={() => openImage(2)}
-                  title="Image 2"
-                />
-                <div
-                  className='imageOpener'
-                  onClick={() =>
-                    openImage(apiURL + '/getImage2.php?id=' + selectedTruck.id)
-                  }
-                />
-                <iframe
-                  src={apiURL + '/getImage3.php?id=' + selectedTruck.id}
-                  onClick={() => openImage(3)}
-                  title="Image 3"
-                />
-                <div
-                  className='imageOpener'
-                  onClick={() =>
-                    openImage(apiURL + '/getImage3.php?id=' + selectedTruck.id)
-                  }
-                />
-                 <iframe
-                  src={apiURL + '/getImage4.php?id=' + selectedTruck.id}
-                  onClick={() => openImage(4)}
-                  title="Image 4"
-                />
-                <div
-                  className='imageOpener'
-                  onClick={() =>
-                    openImage(apiURL + '/getImage4.php?id=' + selectedTruck.id)
-                  }
-                />
-                <iframe
-                  src={apiURL + '/getImage5.php?id=' + selectedTruck.id}
-                  onClick={() => openImage(5)}
-                  title="Image 5"
-                />
-                <div
-                  className='imageOpener'
-                  onClick={() =>
-                    openImage(apiURL + '/getImage5.php?id=' + selectedTruck.id)
-                  }
-                />
-                 <iframe
-                  src={apiURL + '/getImage6.php?id=' + selectedTruck.id}
-                  onClick={() => openImage(6)}
-                  title="Image 6"
-                />
-                <div
-                  className='imageOpener'
-                  onClick={() =>
-                    openImage(apiURL + '/getImage6.php?id=' + selectedTruck.id)
-                  }
-                />
+                {selectedTruck.imageOrigin == 'Cloudinary' ? (
+                  <div style={{display: !selectedTruck.image1 == '' ? "block":"none"}}>
+                    <img src={selectedTruck.image1} alt="Truck" className={zoomImage1? "imageZoomed":""} />
+                    <div className='imageOpener' onClick={() => setZoomImage1(true)}/>
+                  </div>
+                    
+                  ) : (
+                  <div>
+                    <iframe src={apiURL+'/getImage1.php?id=' + selectedTruck.id} onClick={() => console.log('a')} title="Image 1"/>
+                    <div className='imageOpener' onClick={() => openImage(apiURL + '/getImage1.php?id=' + selectedTruck.id)}/>
+                  </div>
+                  )
+                }
+
+                {selectedTruck.imageOrigin == 'Cloudinary' ? (
+                  <div style={{display: !selectedTruck.image2 == '' ? "block":"none"}}>
+                    <img src={selectedTruck.image2} alt="Truck" className={zoomImage2? "imageZoomed":""} />
+                    <div className='imageOpener' onClick={() =>setZoomImage2(true)}/>
+                  </div>
+                    
+                  ) : (
+                  <div>
+                    <iframe src={apiURL+'/getImage2.php?id=' + selectedTruck.id} onClick={() => console.log('a')} title="Image 1"/>
+                    <div className='imageOpener' onClick={() => openImage(apiURL + '/getImage2.php?id=' + selectedTruck.id)}/>
+                  </div>
+                  )
+                }
+
+                {selectedTruck.imageOrigin == 'Cloudinary' ? (
+                  <div style={{display: !selectedTruck.image3 == '' ? "block":"none"}}>
+                    <img src={selectedTruck.image3} alt="Truck" className={zoomImage3? "imageZoomed":""} />
+                    <div className='imageOpener' onClick={() => setZoomImage3(true)}/>
+                  </div>
+                    
+                  ) : (
+                  <div>
+                    <iframe src={apiURL+'/getImage3.php?id=' + selectedTruck.id} onClick={() => console.log('a')} title="Image 1"/>
+                    <div className='imageOpener' onClick={() => openImage(apiURL + '/getImage3.php?id=' + selectedTruck.id)}/>
+                  </div>
+                  )
+                }
+
+                {selectedTruck.imageOrigin == 'Cloudinary' ? (
+                  <div style={{display: !selectedTruck.image4 == '' ? "block":"none"}}>
+                    <img src={selectedTruck.image4} alt="Truck" className={zoomImage4? "imageZoomed":""} />
+                    <div className='imageOpener' onClick={() => setZoomImage4(true)}/>
+                  </div>
+                    
+                  ) : (
+                  <div>
+                    <iframe src={apiURL+'/getImage4.php?id=' + selectedTruck.id} onClick={() => console.log('a')} title="Image 1"/>
+                    <div className='imageOpener' onClick={() => openImage(apiURL + '/getImage4.php?id=' + selectedTruck.id)}/>
+                  </div>
+                  )
+                }
+
+                {selectedTruck.imageOrigin == 'Cloudinary' ? (
+                  <div style={{display: !selectedTruck.image5 == '' ? "block":"none"}}>
+                    <img src={selectedTruck.image5} alt="Truck" className={zoomImage5? "imageZoomed":""} />
+                    <div className='imageOpener' onClick={() => setZoomImage5(true)}/>
+                  </div>
+                    
+                  ) : (
+                  <div>
+                    <iframe src={apiURL+'/getImage5.php?id=' + selectedTruck.id} onClick={() => console.log('a')} title="Image 1"/>
+                    <div className='imageOpener' onClick={() => openImage(apiURL + '/getImage5.php?id=' + selectedTruck.id)}/>
+                  </div>
+                  )
+                }
+
+                {selectedTruck.imageOrigin == 'Cloudinary' ? (
+                  <div style={{display: !selectedTruck.image6 == '' ? "block":"none"}}>
+                    <img src={selectedTruck.image6} alt="Truck" className={zoomImage6? "imageZoomed":""} />
+                    <div className='imageOpener' onClick={() => setZoomImage6(true)}/>
+                  </div>
+                    
+                  ) : (
+                  <div>
+                    <iframe src={apiURL+'/getImage6.php?id=' + selectedTruck.id} onClick={() => console.log('a')} title="Image 1"/>
+                    <div className='imageOpener' onClick={() => openImage(apiURL + '/getImage6.php?id=' + selectedTruck.id)}/>
+                  </div>
+                  )
+                } 
+
               </>
             ) : (
               <p className='emptyArray'>Nothing Selected</p>
             )}
           </div>
-          <div className='overlay' style={{ display: showPopup || showUpdatePopup ? "block" : "none" }} onClick={() => hidePopups()}/>
+          <div className='overlay' style={{ display: showPopup || showUpdatePopup || zoomImage1 || zoomImage2 || zoomImage3 || zoomImage4 || zoomImage5 || zoomImage6 ? "block" : "none" }} onClick={() => hidePopups()}/>
           <div className='image-popup' style={{ display: showPopup ? "block" : "none" }}>
-            <iframe src={selectedImage} title="Selected Image" />
+            <iframe src={selectedImage} title="Selected Image" className='image-viewer' />
           </div>
           <div className='update-popup' style={{display: showUpdatePopup? "flex":"none"}}>
             <h2> Update Truck </h2>
+            {updatedTruck.imageOrigin}
             <div className='form'>
               <input className="field" type='text' value={updatedTruck.company} name='company' onChange={handleInputChange} placeholder='Company Name'/>
               <input className="field" type='text' value={updatedTruck.location} name='location' onChange={handleInputChange} placeholder='Jobsite Address' />
@@ -216,7 +284,7 @@ function Trucks() {
               </select>
               <input className="field" type='date' value={updatedTruck.date} name='date' onChange={handleInputChange}/>
               <input className="field" type='time' value={updatedTruck.time} name='time' onChange={handleInputChange}/>
-              <button onClick={()=> updateTruck()}> Update </button>
+              <button onClick={()=> updateTruck(updatedTruck.imageOrigin)}> Update </button>
             </div>
           </div>
         </div>

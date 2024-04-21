@@ -1408,7 +1408,12 @@ abbr[title] {
   text-transform: capitalize;
 }
 
-
+.wrapper-trucksPage .sideBar img {
+  border: none;
+  width: 100%;
+  height: 155px;
+  border-radius: 10px;
+}
 .wrapper-trucksPage .sideBar iframe {
   border: none;
   width: 100%;
@@ -1440,11 +1445,24 @@ abbr[title] {
   border: 2px solid #65D1B5;
 }
 
-.wrapper-trucksPage .image-popup iframe {
+.wrapper-trucksPage .image-popup .image-viewer {
   width: 100%;
   height: 100%;
   border-radius: 10px;
   border: none;
+  max-width: 100%;
+}
+
+.wrapper-trucksPage .imageZoomed {
+  width: 80vw !important;
+  height: 80vh !important;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
+  background-color: #202124;
+  border-radius: 10px;
+  z-index: 999;
 }
 
 .wrapper-trucksPage .sideBar .emptyArray {
