@@ -1,19 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import logo from '../images/logo.png'
 import '../Sheet.css'
+import { addDoc, collection, getFirestore } from "firebase/firestore";
+import { app } from '../Firebase.js';
+import { doc, setDoc, getDoc } from "firebase/firestore"; 
 
 function Sheet() {
-
+  const db = getFirestore(app);
   const [elements, setElements] = useState([])
   const [totalWeight, setTotalWeight] = useState(0)
   const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
+  const [sign, setSign] = useState('');
 
   useEffect(()=>{
       const searchParams = new URLSearchParams(window.location.search);
       fetch( apiURL + '/getOrderByID.php?id=' + getID() )
       .then(response => response.json())
-      .then(response => setElements(response[0]))
-
+      .then(response => {
+        setElements(response[0])
+        if(response[0].signature !== ''){
+          getSign(response[0].signature)
+        }
+        
+      })
+      
       fetch( apiURL + '/getWeight.php?id=' + getID() )
       .then(response => response.json())
       .then(response => setTotalWeight(response))
@@ -27,13 +37,33 @@ function Sheet() {
   }
 
 
-  function formatDate(date){
-    const dateObj = new Date(date);
-    const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
-    const day = dateObj.getDate().toString().padStart(2, '0');
-    const year = dateObj.getFullYear();
-    return `${month}/${day}/${year}`;
-  }
+  function formatDate(dateString) {
+   if (!dateString) {
+     return "";
+   }
+   
+   const months = [
+     "January", "February", "March", "April", "May", "June",
+     "July", "August", "September", "October", "November", "December"
+   ];
+ 
+   const [year, month, day] = dateString.split('-');
+   const monthIndex = parseInt(month) - 1;
+   const formattedDate = `${months[monthIndex]} ${parseInt(day)}, ${year}`;
+   return formattedDate;
+ }
+
+ async function getSign(id) {
+    const docRef = doc(db, "orders", id);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        setSign(docSnap.data().sign);
+    } else {
+        console.log("SIGNATURE NOT FOUND :(");
+    }
+}
+
+ 
 
 
   return (
@@ -422,6 +452,11 @@ function Sheet() {
           </tbody>
         </table>
         <p id="totWeight"><b>Total Weight:</b> {totalWeight} lbs</p>
+        
+        <div className='sign' style={{display: sign? "flex":"none"}}>
+          <img src={sign}/>
+          <p> Receipment </p>
+        </div>
       </div>
     </div>
   )

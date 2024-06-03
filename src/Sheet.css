@@ -84,3 +84,22 @@
     text-align: left;
     margin-top: 15px;
   }
+  .wrapper-sheet .sign {
+    width: 200px;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    position: fixed;
+    right: 10%;
+    bottom: 10px;
+  }
+  .wrapper-sheet .sign img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-bottom: 1px solid black;
+    filter: grayscale(100%) brightness(0%);
+  }

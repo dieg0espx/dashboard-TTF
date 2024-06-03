@@ -36,6 +36,7 @@ function Orders() {
         .then(response => response.json())
         .then(response => {
           const today = new Date();
+          today.setDate(today.getDate() - 1);
           const tomorrow = new Date(today);
           tomorrow.setDate(tomorrow.getDate() + 1);
           tomorrow.setHours(0, 0, 0, 0); // Set to the beginning of tomorrow
@@ -62,11 +63,16 @@ function Orders() {
     
     
       
-    function formatDate(date){
-        let formattedDate = new Date(date).toLocaleString("en-US", {
-            dateStyle: "long",
-        })
-        return isMobile? date : formattedDate
+    function formatDate(dateString){
+      const months = [
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December"
+      ];
+    
+      const [year, month, day] = dateString.split('-');
+      const monthIndex = parseInt(month) - 1;
+      const formattedDate = `${months[monthIndex]} ${parseInt(day)}, ${year}`;
+      return formattedDate;
     }
 
     

@@ -1,71 +1,76 @@
-import React, { useEffect, useState, useRef} from 'react'
+import React, { useEffect, useState, useRef } from 'react';
 import Sidebar from '../components/Sidebar';
 import { useParams } from 'react-router-dom';
 
-
 function Order() {
-    const [order, setOrder] = useState([])
-    const [showPopup, setShowPopup] = useState(false)
-    const [codeToUpdte, setCodeToUpdate] = useState("");
-    const [nameToUpdate, setNameToUpdate] = useState("")
+    const [order, setOrder] = useState(null);
+    const [showPopup, setShowPopup] = useState(false);
+    const [codeToUpdate, setCodeToUpdate] = useState("");
+    const [nameToUpdate, setNameToUpdate] = useState("");
     const [valueToUpdate, setValueToUpdate] = useState("");
-    const [selectedID, setSelectedID] = useState(null)
-    const [isMobile, setIsMobile] = useState(false)
+    const [selectedID, setSelectedID] = useState(null);
+    const [isMobile, setIsMobile] = useState(false);
   
     const inputRef = useRef(null);
     const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
     
-    useEffect(()=>{
-     fetchData()
-     window.innerWidth < 600 ? setIsMobile(true) : setIsMobile(false)
-    },[])
+    useEffect(() => {
+        fetchData();
+        window.innerWidth < 600 ? setIsMobile(true) : setIsMobile(false);
+    }, []);
 
-    useEffect(()=>{
-      if(!isMobile){
-        inputRef.current.focus();
-      }      
-    },[showPopup])
+    useEffect(() => {
+        if (!isMobile) {
+            inputRef.current?.focus();
+        }
+    }, [showPopup]);
 
-    function getID(){
-      let location = window.location.toString()
-      return location.split('=')[1]
+
+    function getID() {
+        let location = window.location.toString();
+        return location.split('=')[1];
     }
 
-    function fetchData(){
-      fetch(apiURL + '/getOrderByID.php?id=' +  getID())
-      .then(response => response.json())
-      .then(response => setOrder(response))
+    function fetchData() {
+        fetch(apiURL + '/getOrderByID.php?id=' + getID())
+            .then(response => response.json())
+            .then(response => setOrder(response))
+            .catch(error => console.error('Error fetching order:', error));
     }
 
-    function formatDate(date, daysToAdd = 0) {
-      let newDate = new Date(date);
-      newDate.setDate(newDate.getDate() + daysToAdd);      
-      let formattedDate = newDate.toLocaleString("en-US", {
-          dateStyle: "long",
-      });
-      return formattedDate;
+    function formatDate(dateString) {
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const [year, month, day] = dateString.split('-');
+        const monthIndex = parseInt(month) - 1;
+        return `${months[monthIndex]} ${parseInt(day)}, ${year}`;
     }
 
-    function showUpdatePopup(name, value, code){
-      setShowPopup(true)
-      setNameToUpdate(name)
-      setValueToUpdate(value)
-      setCodeToUpdate(code)
+    function showUpdatePopup(name, value, code) {
+        setShowPopup(true);
+        setNameToUpdate(name);
+        setValueToUpdate(value);
+        setCodeToUpdate(code);
     }
 
     function capitalizeString(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
+        return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    async function updateElement(id, value, code){
-      await fetch(`${apiURL}/updateOrder.php?id=` + getID() + '&&code=' + code + '&&value=' + value)
-      fetchData()
-      setNameToUpdate('')
-      setValueToUpdate('')
-      setCodeToUpdate('')
-      setShowPopup(false)
-      inputRef.current.value = '';
-    };
+    async function updateElement(id, value, code) {
+        await fetch(`${apiURL}/updateOrder.php?id=${getID()}&&code=${code}&&value=${value}`);
+        fetchData();
+        setNameToUpdate('');
+        setValueToUpdate('');
+        setCodeToUpdate('');
+        setShowPopup(false);
+        inputRef.current.value = '';
+    }
+
+
+    if (!order) return <div>Loading...</div>;
 
   return (
     <div className='wrapper-order'>
@@ -93,7 +98,7 @@ function Order() {
                     </div>
                     <div className='row' onClick={() => showUpdatePopup("date", elements.date, 'date')}>
                       <h4> Date: </h4>
-                      <p> {formatDate(elements.date)}</p>
+                      <p> {formatDate(elements.date)}</p> 
                     </div>
                     <div className='row' onClick={() => showUpdatePopup("contact", elements.contact, 'contact')}>
                       <h4> Contact Name: </h4>
@@ -434,9 +439,10 @@ function Order() {
           <p id="legend"> Enter the new value to update</p>
           <div className='details-element'>
             <p><b> {capitalizeString(nameToUpdate)} </b></p>
-            <input type={codeToUpdte == 'date' ? "date":"text"} placeholder={valueToUpdate} ref={inputRef} onChange={(e)=>setValueToUpdate(e.target.value)}></input>
+            {/* <input type={codeToUpdte == 'date' ? "date":"text"} placeholder={valueToUpdate} ref={inputRef} onChange={(e)=>setValueToUpdate(e.target.value)}></input> */}
+            <input type={codeToUpdate === 'date' ? "date" : "text"} placeholder={valueToUpdate} ref={inputRef} onChange={(e) => setValueToUpdate(e.target.value)}></input>
           </div>
-          <button onClick={()=> updateElement(selectedID, valueToUpdate, codeToUpdte)}> Update </button>
+          <button onClick={() => updateElement(selectedID, valueToUpdate, codeToUpdate)}> Update </button>
         </div>
     </div>
   )
