@@ -36,6 +36,9 @@ function Sidebar() {
         case 'payroll':
           setSelected(5)
           break
+        case 'mailing':
+          setSelected(6)
+          break
         default:
           break;
       }
@@ -57,6 +60,7 @@ function Sidebar() {
             {/* <button className={selected == 3? "selected":""} onClick={()=>window.location.href = '#/damages'}>   <i className="bi bi-shield-exclamation"></i> Damages </button> */}
             <button className={selected == 4? "selected":""} onClick={()=>window.location.href = '#/forklifts'}> <i className="bi bi-gear"></i> Forklifts </button>
             <button className={selected == 5? "selected":""} onClick={()=>window.location.href = '#/payroll'}>   <i className="bi bi-clock"></i> Payroll </button>
+            <button className={selected == 6? "selected":""} onClick={()=>window.location.href = '#/mailing'}>   <i className="bi bi-envelope-at"></i> Mailing </button>
         </div>
     </div>
        <div className='mobileMenu' style={{display: isMobile && showMenu?"block":"none"}}>
@@ -66,6 +70,7 @@ function Sidebar() {
         {/* <button className={selected == 3? "selected":""} onClick={()=>window.location.href = '#/damages'}>   <i className="bi bi-shield-exclamation"></i> Damages </button> */}
         <button className={selected == 4? "selected":""} onClick={()=>window.location.href = '#/forklifts'}> <i className="bi bi-gear"></i> Forklifts </button>
         <button className={selected == 5? "selected":""} onClick={()=>window.location.href = '#/payroll'}>   <i className="bi bi-clock"></i> Payroll </button>
+        <button className={selected == 6? "selected":""} onClick={()=>window.location.href = '#/mailing'}>   <i className="bi bi-envelope-at"></i> Mailing </button>
        </div>
     </div>
   )

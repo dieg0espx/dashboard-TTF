@@ -13,6 +13,7 @@ import Forklifts from './pages/Forklifts';
 import Damages from './pages/Damages';
 import ProtectedRoutes from './ProtectedRoutes';
 import ReturnSheet from './pages/ReturnSheet';
+import Mailing from './pages/Mailing';
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
             <Route path='/inventory' element={<Inventory />} />
             <Route path='/forklifts' element={<Forklifts />} />
             <Route path='/damages' element={<Damages />} />
+            <Route path='/mailing' element={<Mailing />} />
           </Route>
         </Routes>
       </div>

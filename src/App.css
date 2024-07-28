@@ -979,10 +979,10 @@
   margin-bottom: 15px;
 }
  
-.wrapper-payroll .iconSidebar {
+.iconSidebar {
   font-size: 25px;
 }
-.wrapper-payroll .iconSidebar:hover {
+.iconSidebar:hover {
   color: #65D1B5;
 }
 
@@ -2307,4 +2307,67 @@ overflow-y: scroll;
     margin: 15px auto;
   }
 
+}
+
+
+
+.wrapper-mailing {
+  display: grid;
+  grid-template-columns: 250px auto;
+  background-color: #202124;
+  color: lightgray;
+}
+
+
+.wrapper-mailing h1 {
+  font-size:40px;
+}
+
+.wrapper-mailing .content {
+  height: 100vh;
+  overflow-y: scroll;
+}
+
+.wrapper-mailing .header {
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px;
+  margin-top: 30px;
+  height: 40px;
+}
+
+.wrapper-mailing .content .main-grid {
+  display: grid;
+  grid-template-columns: auto 300px;
+  gap: 10px;
+  margin-top: 40px;
+  padding: 10px;
+}
+
+
+.wrapper-mailing .content .mailing-list {
+  margin: 0 auto 0 auto;
+  height: calc(100vh - 130px);
+  overflow-y: scroll ;
+}
+
+.wrapper-mailing .row {
+  display: grid;
+  grid-template-columns:  1fr 1fr 1fr 1fr;
+  padding: 10px;
+  margin-bottom: 8px;
+  background-color: #282c34;
+  border-radius: 5px;
+  border: 1px solid transparent;
+}
+
+.wrapper-mailing .row:hover{
+  border: 1px solid #65D1B5;
+}
+
+.wrapper-mailing .content .sidebar {
+  background-color: #282c34;
+  border-radius: 5px;
 }
