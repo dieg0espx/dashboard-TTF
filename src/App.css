@@ -2370,4 +2370,68 @@ overflow-y: scroll;
 .wrapper-mailing .content .sidebar {
   background-color: #282c34;
   border-radius: 5px;
+  padding: 20px;
+}
+
+
+.wrapper-mailing .content .sidebar .currentLead {
+  display: flex;
+  flex-direction: column;
+}
+.wrapper-mailing .content .sidebar .currentLead .leadName {
+  margin-bottom: 30px;
+}
+.wrapper-mailing .content .sidebar .currentLead h2 {
+  font-size: 30px;
+  text-align: left;
+  max-width: 70%;
+}
+.wrapper-mailing .content .sidebar .currentLead .label {
+  text-align: left;
+  font-size: 15px;
+  color: #65D1B5;
+  background-color: #282c34;
+  margin-left: 10px;
+  margin-bottom: -8px;
+  margin-top: 8px;
+  padding: 0 5px;
+  z-index: 10;
+  width: fit-content;
+}
+
+.wrapper-mailing .content .sidebar .currentLead input {
+  font-size: 15px;
+  padding: 10px 10px;
+  margin-bottom: 5px;
+  border: 1px solid gray;
+  background-color: transparent;
+  color: lightgrey;
+  border-radius: 5px;
+  outline: none;
+}
+
+.wrapper-mailing .content .sidebar .currentLead input:hover {
+  border: 1px solid #65D1B5;
+}
+
+.wrapper-mailing .content .sidebar .currentLead button {
+  display: block;
+  margin-top: 10px;
+  background-color: #65D1B5;
+  border: 1px solid transparent;
+  height: 30px;
+  border-radius: 5px;
+}
+.wrapper-mailing .content .sidebar .currentLead button:hover {
+  background-color: transparent;
+  border: 1px solid #65D1B5;
+  color: #65D1B5;
+}
+
+.wrapper-mailing .content .sidebar .noLeadSelected {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: gray;
 }

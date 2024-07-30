@@ -4,6 +4,7 @@ import Sidebar from '../components/Sidebar';
 function Mailing() {
     const [contacts, setContacts] = useState([]);
     const [sidebar, setSidebar] = useState(false)
+    const [currentLead, setCurrentLead] = useState()
 
     useEffect(() => {
         getContacts();
@@ -44,6 +45,12 @@ function Mailing() {
             console.error('There was a problem with the fetch operation:', error);
         }
     };
+
+    const selectLead = (id) => {
+        console.log('SELECT LEAD ' + id);
+        setCurrentLead(contacts[id])
+        setSidebar(true)
+    }
     
     
 
@@ -60,7 +67,7 @@ function Mailing() {
                 <div className='main-grid' style={{display: sidebar? 'grid':'block'}}>
                     <div className='mailing-list'>
                         {contacts.map((contact, id) => (
-                            <div className='row'>
+                            <div className='row' onClick={()=>selectLead(id)}>
                                 <p> {contact.name} {contact.lastName} </p>
                                 <p> {contact.company} </p>
                                 <p> {contact.email} </p>
@@ -69,7 +76,30 @@ function Mailing() {
                         ))}
                     </div>
                     <div className="sidebar">
-                        SIDEBAR
+                        {currentLead ? (
+                            <div className='currentLead'>
+                                <div className='leadName'>
+                                    <h2> {currentLead.name} </h2>
+                                    <h2> {currentLead.lastName} </h2>
+                                </div>
+
+                                <p className='label'> Name </p>
+                                <input value={currentLead.name}/>
+                                <p className='label'> Last Name </p>
+                                <input value={currentLead.lastName}/>
+                                <p className='label'> Company </p>
+                                <input value={currentLead.company}/>
+                                <p className='label'> Email </p>
+                                <input value={currentLead.email}/>
+                                <p className='label'> Status </p>
+                                <input value={currentLead.status}/>
+                                <button> Update </button>
+                            </div>
+                        ) : (
+                            <div className='noLeadSelected'>
+                                <p> No Lead Selected </p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
