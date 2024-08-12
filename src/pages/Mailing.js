@@ -61,7 +61,6 @@ function Mailing() {
     };
     
     const updateContact = async(id) => {
-        console.log("UPDATING: " + id);
         const url = apiURL + '/updateLead.php'; // Replace with the actual path to your PHP script
 
         // Prepare the data to be sent in the POST request
@@ -101,11 +100,6 @@ function Mailing() {
             console.error('There was a problem with the fetch operation:', error);
         }    
     }
-
-    useEffect(()=>{
-        console.log(currentLead);
-    },[currentLead])
-    
 
     return (
         <div className='wrapper-mailing'>

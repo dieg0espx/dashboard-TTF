@@ -2354,7 +2354,6 @@ overflow-y: scroll;
   background-color: #282c34;
   outline: none;
   color: white;
-  text-transform: capitalize;
 }
 
 .wrapper-mailing .content .main-grid {
