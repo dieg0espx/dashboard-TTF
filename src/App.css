@@ -2338,6 +2338,25 @@ overflow-y: scroll;
   height: 40px;
 }
 
+.wrapper-mailing .header .actions {
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.wrapper-mailing .header .actions input {
+  display: block;
+  height: 30px;
+  width: 200px;
+  border-radius: 5px;
+  border: none;
+  padding-left: 10px;
+  background-color: #282c34;
+  outline: none;
+  color: white;
+  text-transform: capitalize;
+}
+
 .wrapper-mailing .content .main-grid {
   display: grid;
   grid-template-columns: auto 300px;
@@ -2412,6 +2431,20 @@ overflow-y: scroll;
 
 .wrapper-mailing .content .sidebar .currentLead input:hover {
   border: 1px solid #65D1B5;
+}
+.wrapper-mailing .content .sidebar .currentLead .campaigns {
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.wrapper-mailing .content .sidebar .currentLead .campaigns p {
+  font-size: 15px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #65D1B5;  
+}
+.wrapper-mailing .content .sidebar .currentLead .campaigns li{
+  margin-bottom: 5px;
 }
 
 .wrapper-mailing .content .sidebar .currentLead button {
