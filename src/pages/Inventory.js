@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import Switch from "react-switch";
+import { useCustomers } from '../context/CustomersContext';
+
 
 function Inventory() {
-
+    const { getCustomerByCode } = useCustomers(); 
     const [inventory, setInventory] = useState([])
     const [finding, setFinding] = useState('')
     const [selectedCompany, setSelectedCompany] = useState([])
     const [showCero, setShowCero] = useState(false)
     const [showSidebar, setShowSidebar] = useState(false)
     const [isMobile, setIsMobile] = useState(false)
+    const [currentCustomer, setCurrentCustomer] = useState({})
+    const [showPopup, setShowPopup] = useState(false)
+    const [sendingEmail, setSendingEmail] = useState(false)
 
+    const apiURL = process.env.REACT_APP_PUBLIC_API_URL;
 
     useEffect(()=>{
         getInventory()
@@ -18,6 +24,7 @@ function Inventory() {
             setIsMobile(true)
         }
     },[])
+
 
     async function getInventory() {
         fetch('https://script.google.com/macros/s/AKfycbw9W1Ctu9286GWSJf6Db2HyNY7gKzbjVLE3QvAompXgf8Gk3K902DiUIvH9nWSx9_v0zQ/exec')
@@ -47,6 +54,66 @@ function Inventory() {
               window.open('https://ttfconstruction.com/newInventory/#/printableSheet?code='+code+'&&elements='+matchingRow + '&&company=' + company + '&&jobsite=' + jobsite);
             }}
     }
+
+    const promptEmail = async (code) => {
+        const customer = getCustomerByCode(code);
+        console.log(customer);
+        setCurrentCustomer(customer)
+        setShowPopup(true)
+    }
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setCurrentCustomer(prevCustomer => ({
+          ...prevCustomer,
+          [name]: value
+        }));
+      };
+      
+    const sendInventoryCode = async () => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!currentCustomer.email) {
+          alert('Email is required');
+          return;
+      }
+      if (!emailRegex.test(currentCustomer.email)) {
+          alert('Please enter a valid email address');
+          return;
+      }
+      if (!currentCustomer.contact) {
+          alert('Name is required');
+          return;
+      }
+      if (!currentCustomer.code) {
+          alert('Access Code is required');
+          return;
+      }
+      setSendingEmail(true)
+
+      const { email, contact, code } = currentCustomer;
+
+      try {
+          const response = await fetch(`https://mailer-ttfscaffolding.vercel.app/sendInventoryCode?fullName=${encodeURIComponent(contact)}&code=${encodeURIComponent(code)}&destinatary=${encodeURIComponent(email)}`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              }
+          });
+          if(response.status == 200) {
+            alert("Email Sent Successfully")
+            setCurrentCustomer({})
+            setShowPopup(false)
+            setSendingEmail(false)
+          } else {
+            alert("Error Sending Email.. ")
+            setSendingEmail(false)
+          }
+      } catch (error) {
+          console.error('Error:', error);
+          alert('There was an error sending the inventory code. Please try again.');
+          setSendingEmail(false)
+      }
+    };
+    
         
   return (
     <div className='wrapper-inventory'>
@@ -73,7 +140,6 @@ function Inventory() {
                                 <p id="company"> {row[0]} - {row[1]}</p>
                                 <p id="jobsite"> {row[2]}</p>
                              </div>
-
                         </div>
                       );
                     }
@@ -92,11 +158,13 @@ function Inventory() {
                     <p id="company"> {selectedCompany.company} </p>
                     <p id="jobsite"> {selectedCompany.jobsite} </p>
                     <div className='two-col' style={{display: selectedCompany.code ? "flex":"none"}}>
-                        <i class="bi bi-printer btnPrint" onClick={()=>printInventory(selectedCompany.code)}></i>          
+                        <div className='action-btns'> 
+                            <i class="bi bi-printer actionBtn" onClick={()=>printInventory(selectedCompany.code)}></i>          
+                            <i className="bi bi-send actionBtn" onClick={()=>promptEmail(selectedCompany.code)}></i>
+                        </div>
                         <div>
                         <Switch onChange={()=>setShowCero(!showCero)} checked={showCero} uncheckedIcon={false} checkedIcon={false} onColor='#65D1B5'/>
                         </div>
-                        
                     </div>   
                     <div className='rows-sidebar'>
                     {selectedCompany.code ? (
@@ -319,6 +387,28 @@ function Inventory() {
                       <p className='emptyArray'>Nothing Selected</p>
                     )}
                     </div>
+                </div>
+            </div>
+            <div className='overlay' style={{display: showPopup ? 'block':'none'}}  onClick={()=>setShowPopup(!showPopup)}></div>
+            <div className='sendEmailPopup'  style={{display: showPopup ? 'flex':'none'}}>
+                <h2> Send Inventory Code </h2>
+                <div className='form' style={{display: !sendingEmail ? 'flex':'none' }}>
+                  <div className='field'>
+                    <p> Name: </p>
+                    <input name="contact" value={currentCustomer.contact || ''} onChange={handleInputChange} type='text' />
+                  </div>
+                  <div className='field'>
+                    <p> Email Address: </p>
+                    <input name="email" value={currentCustomer.email || ''} onChange={handleInputChange} type='text' />
+                  </div>
+                  <div className='field'>
+                    <p> Access Code: </p>
+                    <input name="code" value={currentCustomer.code || ''} onChange={handleInputChange} type='text' />
+                  </div>
+                  <button onClick={() => sendInventoryCode()}> Send Email </button>
+                </div>
+                <div style={{display: sendingEmail ? 'flex':'none' }}>
+                    <div className="loaderEmail"></div>
                 </div>
             </div>
         </div>
