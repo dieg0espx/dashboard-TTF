@@ -20,12 +20,15 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import ReturnSheet from "./pages/ReturnSheet";
 import Mailing from "./pages/Mailing";
 import { CustomersProvider } from "./context/CustomersContext";
+import Overview from "./pages/Overview";
+import { OrdersProvider } from "./context/OrdersContext";
 
 function App() {
   return (
     <div>
       <div className="App">
-        <CustomersProvider>
+        <OrdersProvider>
+        <CustomersProvider>          
           <Routes>
             <Route element={<ProtectedRoutes />}>
               <Route path="/" element={<Orders />} />
@@ -40,10 +43,12 @@ function App() {
               <Route path="/inventory" element={<Inventory />} />
               <Route path="/forklifts" element={<Forklifts />} />
               <Route path="/damages" element={<Damages />} />
-              <Route path="/mailing" element={<Mailing />} />
+              <Route path="/mailing" element={<Mailing />} />        
+              <Route path="/overview" element={<Overview />} />
             </Route>
           </Routes>
         </CustomersProvider>
+        </OrdersProvider>
       </div>
     </div>
   );

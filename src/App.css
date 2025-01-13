@@ -2550,3 +2550,7 @@ overflow-y: scroll;
   justify-content: center;
   color: gray;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
