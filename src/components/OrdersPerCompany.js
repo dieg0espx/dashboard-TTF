@@ -73,11 +73,11 @@ const OrdersPerCompany = ({ orders }) => {
           theme: {
             mode: 'dark', // Enable dark mode
           },
-          colors: ['#1A56DB', '#F97316'], // Colors for shipping and return bars
+          colors: ['#65D1B5', '#ff7f50'], // Colors for shipping and return bars
           plotOptions: {
             bar: {
               horizontal: false,
-              columnWidth: '80%',
+              columnWidth: '60%',
               borderRadius: 0,
               dataLabels: { position: 'top' },
             },
@@ -124,7 +124,7 @@ const OrdersPerCompany = ({ orders }) => {
   }, [orders]);
 
   return (
-    <div className="w-[100%] mx-auto mt-[30px] px-[20px] py-[10px] bg-[#0e1013] rounded-2xl">
+    <div className="w-[100%] mx-auto px-[20px] py-[10px] bg-[#0e1013] rounded-2xl">
       <h2 className="text-2xl font-bold mb-4 text-white">Top 10 Companies: Shipping vs Return</h2>
       {chartData.series.length > 0 ? (
         <ReactApexChart

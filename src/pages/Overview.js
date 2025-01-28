@@ -5,6 +5,8 @@ import { useOrders } from '../context/OrdersContext'
 import YearsOrders from '../components/YearsOrders'
 import OrdersPerCompany from '../components/OrdersPerCompany'
 import JobsitesPerCompany from '../components/JobsitePerCompany'
+import JobsitesPerMonth from '../components/JobsitesPerMonth'
+import TotalStats from '../components/TotalStats'
 
 function Overview() {
     const { orders, ordersDates } = useOrders();
@@ -19,11 +21,18 @@ function Overview() {
             </div>
             <div>
                 <div>
-                    <YearsOrders orders={ordersDates}/>
+                    <TotalStats/>
                 </div>
-                <div className='grid grid-cols-2 gap-[25px] w-[95%] mx-auto'>
+               
+                <div>
+                    <JobsitesPerMonth/>
+                </div>
+                <div className='flex justify-between w-[95%] mx-auto gap-[40px] mt-[40px]'>
                     <OrdersPerCompany orders={orders} />
                     <JobsitesPerCompany orders={orders} />
+                </div>
+                <div>
+                    <YearsOrders orders={ordersDates}/>
                 </div>
                 
             </div>

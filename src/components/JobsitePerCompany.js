@@ -62,11 +62,11 @@ const JobsitePerCompany = ({ orders }) => {
           theme: {
             mode: 'dark', // Enable dark mode
           },
-          colors: ['#7E3BF2'], // Single color for the bars
+          colors: ['#65D1B5'], // Single color for the bars
           plotOptions: {
             bar: {
               horizontal: false,
-              columnWidth: '80%',
+              columnWidth: '60%',
               borderRadius: 0,
             },
           },
@@ -109,8 +109,8 @@ const JobsitePerCompany = ({ orders }) => {
   }, [orders]);
 
   return (
-    <div className="w-[95%] mx-auto mt-[30px] px-[20px] py-[10px] bg-[#0e1013] rounded-2xl">
-      <h2 className="text-2xl font-bold mb-4 text-white">Top 10 Companies Jobsites</h2>
+    <div className="w-[100%] mx-auto px-[20px] py-[10px] bg-[#0e1013] rounded-2xl">
+      <h2 className="text-2xl font-bold mb-4 text-white">Jobsites Per Company</h2>
       {chartData.series.length > 0 ? (
         <ReactApexChart
           options={chartData.options}

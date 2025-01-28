@@ -39,6 +39,9 @@ function Sidebar() {
         case 'mailing':
           setSelected(6)
           break
+        case 'overview':
+          setSelected(7)
+          break
         default:
           break;
       }
@@ -54,6 +57,7 @@ function Sidebar() {
         <img src={logo}></img>
         <i className={isMobile && showMenu ? "bi bi-x-lg iconMenu":"bi bi-list iconMenu"} style={{display: isMobile? "block":"none"}} onClick={()=>setShowMenu(!showMenu)}></i>
         <div className='menu' style={{display: isMobile?"none":"block"}}>
+            <button className={selected == 7? "selected":""} onClick={()=>window.location.href = '#/overview'}>  <i className="bi bi-graph-up"></i> Overview </button>
             <button className={selected == 0? "selected":""} onClick={()=>window.location.href = '#/orders'}>    <i className="bi bi-list-check"></i> Orders </button>
             <button className={selected == 1? "selected":""} onClick={()=>window.location.href = '#/trucks'}>    <i className="bi bi-truck"></i> Trucks </button>
             <button className={selected == 2? "selected":""} onClick={()=>window.location.href = '#/inventory'}> <i className="bi bi-boxes"></i> Inventory </button>
@@ -64,6 +68,7 @@ function Sidebar() {
         </div>
     </div>
        <div className='mobileMenu' style={{display: isMobile && showMenu?"block":"none"}}>
+        <button className={selected == 7? "selected":""} onClick={()=>window.location.href = '#/overview'}>  <i className="bi bi-graph-up"></i> Overview </button>
         <button className={selected == 0? "selected":""} onClick={()=>window.location.href = '#/orders'}>    <i className="bi bi-list-check"></i> Orders </button>
         <button className={selected == 1? "selected":""} onClick={()=>window.location.href = '#/trucks'}>    <i className="bi bi-truck"></i> Trucks </button>
         <button className={selected == 2? "selected":""} onClick={()=>window.location.href = '#/inventory'}> <i className="bi bi-boxes"></i> Inventory </button>

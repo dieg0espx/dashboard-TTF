@@ -80,7 +80,7 @@ const YearsOrders = ({ orders }) => {
           },
           yaxis: {
             labels: {
-              formatter: (value) => `${value} Orders`,
+              formatter: (value) => `${value} Tasks`,
               style: {
                 colors: '#E5E7EB', // Light text color for dark mode
               },
@@ -108,7 +108,7 @@ const YearsOrders = ({ orders }) => {
 
   return (
     <div className="w-[95%] mx-auto mt-[50px] px-[20px] py-[10px] bg-[#0e1013] rounded-2xl">
-        <h2 className='relative -top-[10px]'> Shipping + Return </h2>
+    <h2 className='relative -top-[10px]'> Daily Tasks (Shipping / Return)</h2>
       {chartData.series.length > 0 && (
         <ReactApexChart
           options={chartData.options}
