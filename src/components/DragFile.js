@@ -77,20 +77,6 @@ const DragFile = ({ onResponse }) => {
         <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md" onClick={uploadFiles} disabled={uploading}>
           {uploading ? "Uploading..." : "Upload & Process"}
         </button>
-
-        {/* Display AI Response
-        {aiResponse && (
-          <div className="mt-6 p-4 border bg-gray-100 w-full text-left">
-            <h3 className="text-lg font-bold">PDF Processing Results:</h3>
-            {aiResponse.map((res) => (
-              <div key={res.page} className="border p-2 mt-2">
-                <p><strong>📄 Page {res.page}:</strong></p>
-                <p><strong>📝 Extracted Text:</strong> {res.text || "No text found"}</p>
-                <p><strong>🔲 Detected Shapes:</strong> {res.shape_count}</p>
-              </div>
-            ))}
-          </div>
-        )} */}
       </div>
     </div>
   );
