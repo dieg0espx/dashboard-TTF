@@ -22,6 +22,7 @@ import Mailing from "./pages/Mailing";
 import { CustomersProvider } from "./context/CustomersContext";
 import Overview from "./pages/Overview";
 import { OrdersProvider } from "./context/OrdersContext";
+import TakeOff from "./pages/TakeOff";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               <Route path="/damages" element={<Damages />} />
               <Route path="/mailing" element={<Mailing />} />        
               <Route path="/overview" element={<Overview />} />
+              <Route path="/takeOff" element={<TakeOff />} />
             </Route>
           </Routes>
         </CustomersProvider>

@@ -137,6 +137,10 @@
 
 /* ====== SIDE BAR ====== */
 
+.header h1 {
+  font-weight: bold;
+}
+
 .wrapper-sidebar {
   width: 250px;
   height: 100vh;
