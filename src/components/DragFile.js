@@ -35,7 +35,7 @@ const DragFile = ({ onResponse }) => {
     setAiResponse(null);
 
     try {
-      const response = await axios.post("http://35.183.41.141/process-pdf", formData, {
+      const response = await axios.post("https://ai-takeoff-production.up.railway.app/process-pdf/", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
