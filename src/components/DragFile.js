@@ -102,18 +102,18 @@ const DragFile = ({ onResponse }) => {
               </ul>
               
               <button
-                className="text-gray-600 hover:text-primary"
+                className="text-gray-600"
                 onClick={uploadFiles}
                 disabled={uploading}
               >
-                {!uploading ? (
+                {uploading ? (
                   <div className="flex items-center gap-[10px]">
                    <Loading />Uploading ...
                   </div>
                 ) : (
-                  <>
+                  <div className="text-gray-600 hover:text-primary">
                     Upload & Process <i className="bi bi-arrow-right-circle ml-[10px]"></i>
-                  </>
+                  </div>
                 )}
               </button>
 

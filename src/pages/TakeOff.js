@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar';
 import DragFile from '../components/DragFile';
 import axios from 'axios';
 import { AIFormattedText } from '../components/AIFormattedText';
+import Loading from '../components/Loading';
 
 function TakeOff() {
     const [serverResponse, setServerResponse] = useState({});
@@ -75,7 +76,14 @@ function TakeOff() {
                             <p className='text-left'><b>Shapes Count:</b> {serverResponse.shape_count}</p>  
                         </div>
                         <div className='border-b border-gray-700 p-4'>
-                          <AIFormattedText text={textResponse} />
+                            {loading ? (
+                                <div className='p-[10px] flex items-center gap-[20px]'>
+                                    <Loading /> 
+                                    <p> Thinking ... </p>
+                                </div>
+                            ) : (
+                                <AIFormattedText text={textResponse} /> 
+                            )}
                         </div>                          
                     </div>
                   )}
