@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import Loading from "./Loading";
 
 const DragFile = ({ onResponse }) => {
   const [isDragging, setIsDragging] = useState(false);
@@ -105,8 +106,10 @@ const DragFile = ({ onResponse }) => {
                 onClick={uploadFiles}
                 disabled={uploading}
               >
-                {uploading ? (
-                  "Uploading..."
+                {!uploading ? (
+                  <div className="flex items-center gap-[10px]">
+                   <Loading />Uploading ...
+                  </div>
                 ) : (
                   <>
                     Upload & Process <i className="bi bi-arrow-right-circle ml-[10px]"></i>
