@@ -17,6 +17,18 @@ code {
   transition: transform 0.2s ease;
 }
 
+/* Hide scrollbars globally */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html, body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  overflow: hidden; /* Optional: Prevent scrolling */
+}
+
+
 
 @tailwind base;
 @tailwind components;

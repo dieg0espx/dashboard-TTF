@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         primary: "#65D1B5", // Custom primary color
+        darkGray: '#0e1013'
       },
     }, // Extend Tailwind's default theme
   },
