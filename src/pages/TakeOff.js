@@ -4,6 +4,8 @@ import DragFile from '../components/DragFile';
 import axios from 'axios';
 import { AIFormattedText } from '../components/AIFormattedText';
 import Loading from '../components/Loading';
+import UploadToDrive from '../components/UploadToDrive';
+import FileUploader from '../components/FileUploader';
 
 function TakeOff() {
     const [serverResponse, setServerResponse] = useState({});
@@ -58,7 +60,7 @@ function TakeOff() {
                           }}
                       />
                     ) : (
-                        <DragFile onResponse={handleResponse}/>
+                        <FileUploader onResponse={handleResponse}/>
                     )}
                   </div>
                   {serverResponse?.file_name && (

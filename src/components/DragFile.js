@@ -30,27 +30,41 @@ const DragFile = ({ onResponse }) => {
     }
   };
 
-  const uploadFiles = async () => {
-    if (!files.length) return alert("Please select a PDF first.");
-    const formData = new FormData();
-    formData.append("file", files[0]);
-    setUploading(true);
+  // const uploadFiles = async () => {
+  //   if (!files.length) return alert("Please select a PDF first.");
+  //   const formData = new FormData();
+  //   formData.append("file", files[0]);
+  //   setUploading(true);
 
+  //   try {
+  //     // const response = await axios.post("https://your-server.com/process-pdf/", formData);
+  //     const response = await axios.post("http://127.0.0.1:8000/process-pdf/", formData);
+  //     response.data.success ? onResponse(response.data.results) : alert(response.data.error);
+  //   } catch (error) {
+  //     alert("Upload failed.");
+  //     console.error(error);
+  //   } finally {
+  //     setUploading(false);
+  //   }
+  // };
+
+  const uploadFiles = async () => {
+    setUploading(true)
     try {
-      // const response = await axios.post("https://your-server.com/process-pdf/", formData);
-      const response = await axios.post("http://127.0.0.1:8000/process-pdf/", formData);
+      const response = await axios.post("http://127.0.0.1:8000/process-pdf/", {
+        file_id: "1nVwtyQWA3k74GdLivOP9oEA0bt5YZywz"
+      });
       response.data.success ? onResponse(response.data.results) : alert(response.data.error);
     } catch (error) {
-      alert("Upload failed.");
-      console.error(error);
+      console.error("Error calling server:", error.response ? error.response.data : error.message);
     } finally {
       setUploading(false);
     }
   };
-
+  
   return (
     <div
-      className={`w-[80%] mx-auto mt-[50px]  flex items-center justify-center border rounded-xl p-8 text-center cursor-pointer ${
+      className={`w-[80%] max-w-[970px] mx-auto mt-[50px]  flex items-center justify-center border rounded-xl p-8 text-center cursor-pointer ${
         isDragging ? "border-primary" : "border-gray-700"
       }`}
       onDragEnter={handleDragEnter}
@@ -121,6 +135,8 @@ const DragFile = ({ onResponse }) => {
           </>
         )}
       </div>
+
+      <button onClick={()=> uploadFiles()}> Call Server </button>
     </div>
   );
 };
