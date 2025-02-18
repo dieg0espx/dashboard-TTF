@@ -113,7 +113,7 @@ const FileUploader = ({ onResponse }) => {
   };
 
   return (
-    <div className="w-[80%] max-w-[970px] mx-auto mt-[50px] flex items-center justify-center border rounded-xl p-8 text-center cursor-pointer"
+    <div className={`w-[80%] max-w-[970px] mx-auto mt-[50px] flex items-center justify-center rounded-xl p-8 text-center cursor-pointer border-gray-700 ${!accessToken ? '' : 'border'}`}
       onDragEnter={handleDragEnter} onDragLeave={handleDragLeave}
       onDragOver={handleDragOver} onDrop={handleDrop}
     >
@@ -127,7 +127,7 @@ const FileUploader = ({ onResponse }) => {
 
       {!accessToken ? (
         <div className="w-[100%] h-[calc(100vh-90px)] flex items-center justify-center">
-          <div className="border border-gray-600 px-[50px] py-[100px] rounded-lg flex items-center justify-center gap-[80px] -mt-[150px]">
+          <div className="border border-gray-600 px-[50px] py-[100px] rounded-lg flex items-center justify-center gap-[80px] -mt-[250px]">
             <p className="max-w-[400px] text-left">
               <b>🏗️ Welcome to TTF Scaffolding!</b> <br />
               AI-Takeoff is designed to optimize your workflow—sign in to leverage cutting-edge tools for accurate planning and faster execution.
@@ -145,7 +145,7 @@ const FileUploader = ({ onResponse }) => {
           )}
 
           {!files.length && (
-            <div className="py-[100px] flex flex-col gap-[20px]">
+            <div className="py-[100px] flex flex-col gap-[20px] px-[300px] rounded-lg">
               <i className="bi bi-folder-plus text-gray-400 text-[40px]"></i>
               <p className="text-gray-600">Drag and drop your file here</p>
               <p className="text-gray-600">or</p>
@@ -154,7 +154,7 @@ const FileUploader = ({ onResponse }) => {
           )}
 
           {files.length > 0 && (
-            <div className="w-[120%] -mb-[30px] mt-[50px] rounded-b-xl bg-darkGray py-[10px] px-[10px] flex flex-row justify-between items-center">
+            <div className="w-[120%] -mb-[30px] mt-[50px] rounded-b-xl bg-darkGray py-[10px] px-[10px] flex flex-row justify-between items-center ">
               <ul className="text-gray-700">
                 {files.map((file) => (
                   <li key={file.name}>{file.name}</li>
