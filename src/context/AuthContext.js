@@ -1,20 +1,31 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from "react";
 
-// Create our Auth Context
 const AuthContext = createContext(null);
 
-// This provider holds the token in state (in memory)
 export function AuthProvider({ children }) {
   const [accessToken, setAccessToken] = useState(null);
 
+  // Load token from sessionStorage on app start
+  useEffect(() => {
+    const storedToken = sessionStorage.getItem("google_access_token");
+    if (storedToken) {
+      setAccessToken(storedToken);
+    }
+  }, []);
+
+  // Function to update token and store in session
+  const updateAccessToken = (token) => {
+    setAccessToken(token);
+    sessionStorage.setItem("google_access_token", token);
+  };
+
   return (
-    <AuthContext.Provider value={{ accessToken, setAccessToken }}>
+    <AuthContext.Provider value={{ accessToken, setAccessToken: updateAccessToken }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
-// Custom hook to use Auth in any component
 export function useAuth() {
   return useContext(AuthContext);
 }

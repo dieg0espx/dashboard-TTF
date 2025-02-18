@@ -50,8 +50,8 @@ const FileUploader = ({ onResponse }) => {
 
   const handleChooseFile = () => fileInputRef.current.click();
 
-  // Upload File to Google Drive
-  const uploadFileToDrive = async () => {
+// Upload File to Google Drive inside "AI-TakeOff" folder
+const uploadFileToDrive = async () => {
     if (!accessToken) {
       alert("❌ Please log in first!");
       return;
@@ -60,16 +60,50 @@ const FileUploader = ({ onResponse }) => {
       alert("❌ Please select a file first!");
       return;
     }
-
+  
     setUploading(true);
     const file = files[0];
-    const metadata = { name: file.name, mimeType: file.type };
-    const form = new FormData();
-    form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
-    form.append("file", file);
-
+  
     try {
-      // Step 1: Upload file to Google Drive
+      // Step 1: Find or Create "AI-TakeOff" folder
+      let folderId;
+      const folderSearchResponse = await fetch(
+        `https://www.googleapis.com/drive/v3/files?q=name='AI-TakeOff' and mimeType='application/vnd.google-apps.folder'&spaces=drive`,
+        {
+          method: "GET",
+          headers: { Authorization: `Bearer ${accessToken}` },
+        }
+      );
+  
+      const folderSearchResult = await folderSearchResponse.json();
+      if (folderSearchResult.files.length > 0) {
+        folderId = folderSearchResult.files[0].id; // Folder exists, get ID
+        console.log("📂 Found AI-TakeOff folder:", folderId);
+      } else {
+        // Folder doesn't exist, create it
+        const folderCreateResponse = await fetch("https://www.googleapis.com/drive/v3/files", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: "AI-TakeOff",
+            mimeType: "application/vnd.google-apps.folder",
+          }),
+        });
+  
+        const folderCreateResult = await folderCreateResponse.json();
+        folderId = folderCreateResult.id;
+        console.log("📂 Created AI-TakeOff folder:", folderId);
+      }
+  
+      // Step 2: Upload file to the AI-TakeOff folder
+      const metadata = { name: file.name, mimeType: file.type, parents: [folderId] };
+      const form = new FormData();
+      form.append("metadata", new Blob([JSON.stringify(metadata)], { type: "application/json" }));
+      form.append("file", file);
+  
       const uploadResponse = await fetch(
         "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
         {
@@ -78,12 +112,12 @@ const FileUploader = ({ onResponse }) => {
           body: form,
         }
       );
-
+  
       const uploadResult = await uploadResponse.json();
       console.log("✅ File Uploaded:", uploadResult);
       setFileId(uploadResult.id);
-
-      // Step 2: Make file public
+  
+      // Step 3: Make file public
       await fetch(`https://www.googleapis.com/drive/v3/files/${uploadResult.id}/permissions`, {
         method: "POST",
         headers: {
@@ -92,14 +126,14 @@ const FileUploader = ({ onResponse }) => {
         },
         body: JSON.stringify({ role: "reader", type: "anyone" }),
       });
-
-      alert("✅ File uploaded successfully! Now calling the server...");
-
-      // Step 3: Call server to process the file
+  
+      console.log("✅ File uploaded successfully! Now calling the server...");
+  
+      // Step 4: Call server to process the file
       const serverResponse = await axios.post("http://127.0.0.1:8000/process-pdf/", {
         file_id: uploadResult.id,
       });
-
+  
       if (serverResponse.data.success) {
         onResponse(serverResponse.data.results);
       } else {
@@ -111,6 +145,7 @@ const FileUploader = ({ onResponse }) => {
       setUploading(false);
     }
   };
+  
 
   return (
     <div className={`w-[80%] max-w-[970px] mx-auto mt-[50px] flex items-center justify-center rounded-xl p-8 text-center cursor-pointer border-gray-700 ${!accessToken ? '' : 'border'}`}
